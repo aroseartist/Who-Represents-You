@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<h1>Most Frequent Words in {{ state }}</h1>
+<br>
+<div>
+<ul>
+	{% for topwords in topwords_per_state %}
+    <li>{{ topwords['ngram'] }}</li></br>
+   	{% endfor %}
+</ul>
+</div>
+
+
+{% endblock %}
+
+

@@ -1,0 +1,270 @@
+{  
+  u'tfidf':6.92965132215303e-05,
+  u'size':3447,
+  u'name':u'fresno'
+},
+{  
+  u'tfidf':2.87311372836468e-05,
+  u'size':31684,
+  u'name':u'amendment'
+},
+{  
+  u'tfidf':1.12603011651346e-05,
+  u'size':4216,
+  u'name':u'rollcall'
+},
+{  
+  u'tfidf':1.08529162189187e-05,
+  u'size':6152,
+  u'name':u'nuclear'
+},
+{  
+  u'tfidf':9.77624009137091e-06,
+  u'size':10781,
+  u'name':u'section'
+},
+{  
+  u'tfidf':9.23865412720468e-06,
+  u'size':10570,
+  u'name':u'republican'
+},
+{  
+  u'tfidf':8.8965994262484e-06,
+  u'size':3331,
+  u'name':u'subsection'
+},
+{  
+  u'tfidf':7.84193044742482e-06,
+  u'size':8972,
+  u'name':u'shall'
+},
+{  
+  u'tfidf':7.32974016184848e-06,
+  u'size':8386,
+  u'name':u'medicare'
+},
+{  
+  u'tfidf':6.66022180220432e-06,
+  u'size':7620,
+  u'name':u'republicans'
+},
+{  
+  u'tfidf':6.45847306200604e-06,
+  u'size':3661,
+  u'name':u'c'
+},
+{  
+  u'tfidf':6.44618154662785e-06,
+  u'size':7317,
+  u'name':u'b'
+},
+{  
+  u'tfidf':6.28052277948e-06,
+  u'size':6753,
+  u'name':u'intelligence'
+},
+{  
+  u'tfidf':5.84808473109807e-06,
+  u'size':3315,
+  u'name':u'patent'
+},
+{  
+  u'tfidf':5.75105768427744e-06,
+  u'size':3260,
+  u'name':u'israel'
+},
+{  
+  u'tfidf':5.52628468255e-06,
+  u'size':2944,
+  u'name':u'paragraph'
+},
+{  
+  u'tfidf':5.48550551583127e-06,
+  u'size':6276,
+  u'name':u'thing'
+},
+{  
+  u'tfidf':5.42239145991584e-06,
+  u'size':3056,
+  u'name':u'consumers'
+},
+{  
+  u'tfidf':5.02731426273633e-06,
+  u'size':5544,
+  u'name':u'weapons'
+},
+{  
+  u'tfidf':4.78801772079728e-06,
+  u'size':5478,
+  u'name':u'got'
+},
+{  
+  u'tfidf':4.78015131709389e-06,
+  u'size':5469,
+  u'name':u'deal'
+},
+{  
+  u'tfidf':4.42528910558536e-06,
+  u'size':5063,
+  u'name':u'debt'
+},
+{  
+  u'tfidf':4.39994180476332e-06,
+  u'size':5034,
+  u'name':u'democrats'
+},
+{  
+  u'tfidf':4.3370105751362e-06,
+  u'size':4962,
+  u'name':u'saying'
+},
+{  
+  u'tfidf':4.09965508330284e-06,
+  u'size':4521,
+  u'name':u'campaign'
+},
+{  
+  u'tfidf':3.95680106280564e-06,
+  u'size':4527,
+  u'name':u'motion'
+},
+{  
+  u'tfidf':3.83547346288861e-06,
+  u'size':4256,
+  u'name':u"that's"
+},
+{  
+  u'tfidf':3.74803891623e-06,
+  u'size':4030,
+  u'name':u'santa'
+},
+{  
+  u'tfidf':3.58096177475474e-06,
+  u'size':4097,
+  u'name':u'clinton'
+},
+{  
+  u'tfidf':3.57746559533101e-06,
+  u'size':4093,
+  u'name':u'opposition'
+},
+{  
+  u'tfidf':3.55854132301473e-06,
+  u'size':3939,
+  u'name':u'terms'
+},
+{  
+  u'tfidf':3.36856887476318e-06,
+  u'size':3854,
+  u'name':u'border'
+},
+{  
+  u'tfidf':3.31787427311911e-06,
+  u'size':3796,
+  u'name':u'chinese'
+},
+{  
+  u'tfidf':3.19638203814451e-06,
+  u'size':3657,
+  u'name':u'ca'
+},
+{  
+  u'tfidf':3.11684395625467e-06,
+  u'size':3566,
+  u'name':u'drugs'
+},
+{  
+  u'tfidf':3.09149665543263e-06,
+  u'size':3537,
+  u'name':u'terrorism'
+},
+{  
+  u'tfidf':3.03842261522e-06,
+  u'size':3267,
+  u'name':u'proposal'
+},
+{  
+  u'tfidf':3.01331168451e-06,
+  u'size':3240,
+  u'name':u'relations'
+},
+{  
+  u'tfidf':3.00234408012754e-06,
+  u'size':3435,
+  u'name':u"we're"
+},
+{  
+  u'tfidf':2.97146013334e-06,
+  u'size':3195,
+  u'name':u'review'
+},
+{  
+  u'tfidf':2.96476015132245e-06,
+  u'size':3392,
+  u'name':u'killed'
+},
+{  
+  u'tfidf':2.96388610646651e-06,
+  u'size':3391,
+  u'name':u'church'
+},
+{  
+  u'tfidf':2.93591667107668e-06,
+  u'size':3359,
+  u'name':u'deficit'
+},
+{  
+  u'tfidf':2.89658465255973e-06,
+  u'size':3314,
+  u'name':u'attack'
+},
+{  
+  u'tfidf':2.89483656284786e-06,
+  u'size':3312,
+  u'name':u'african'
+},
+{  
+  u'tfidf':2.8496256177e-06,
+  u'size':3064,
+  u'name':u'fully'
+},
+{  
+  u'tfidf':2.8437333203357e-06,
+  u'size':3136,
+  u'name':u'chance'
+},
+{  
+  u'tfidf':2.81180230153429e-06,
+  u'size':3217,
+  u'name':u'2001'
+},
+{  
+  u'tfidf':2.81005421182243e-06,
+  u'size':3215,
+  u'name':u'wage'
+},
+{  
+  u'tfidf':2.79731446095796e-06,
+  u'size':3182,
+  u'name':u'voting'
+},
+{  
+  u'tfidf':2.79257331470378e-06,
+  u'size':3195,
+  u'name':u'caucus'
+},
+{  
+  u'tfidf':2.75848556532242e-06,
+  u'size':3156,
+  u'name':u'vietnam'
+},
+{  
+  u'tfidf':2.7203508263e-06,
+  u'size':2925,
+  u'name':u'1997'
+},
+{  
+  u'tfidf':2.67781839625547e-06,
+  u'size':2981,
+  u'name':u'votes'
+}
