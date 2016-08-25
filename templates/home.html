@@ -12,7 +12,7 @@
     <!-- Bootstrap Core CSS -->
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="static/css/index-page.css" rel="stylesheet"> 
+    <link rel="stylesheet" href="static/css/index-page.css"> 
 	<!-- Access to D3 paths -->
 	<script src="https://d3js.org/d3.v3.js"></script>
     
@@ -224,59 +224,59 @@
 // ################## Bubbles ####################
 
                 // Map the states where word is used!
-                d3.csv("/city", function(data) {
-                    // debugger;
-                    svg.selectAll("circle")
-                        .data(data)
-                        .enter()
-                        .append("circle")
-                        .attr("cx", function(d) {
-                            return projection([d.lon, d.lat])[0];
-                        })
-                        .attr("cy", function(d) {
-                            return projection([d.lon, d.lat])[1];
-                        })
-                        .attr("r", function(d) {
-                            return Math.sqrt(d.years) * 4;
-                        })
-                        .style("fill", "rgb(223,223,223)")
-                        .style("opacity", 0.7)
+                // d3.csv("/city", function(data) {
+                //     // debugger;
+                //     svg.selectAll("circle")
+                //         .data(data)
+                //         .enter()
+                //         .append("circle")
+                //         .attr("cx", function(d) {
+                //             return projection([d.lon, d.lat])[0];
+                //         })
+                //         .attr("cy", function(d) {
+                //             return projection([d.lon, d.lat])[1];
+                //         })
+                //         .attr("r", function(d) {
+                //             return Math.sqrt(d.years) * 4;
+                //         })
+                //         .style("fill", "rgb(223,223,223)")
+                //         .style("opacity", 0.7)
 
-                    // add browser tooltip of city name
-                    .append("title")
-                        .text(function(d) {
-                            return d.place;
-                        });
+                //     // add browser tooltip of city name
+                //     .append("title")
+                //         .text(function(d) {
+                //             return d.place;
+                //         });
 
 // ################## Legend ####################
 
-                    // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
-                    var legend = d3.select("body").append("svg")
-                        .attr("class", "legend")
-                        .attr("width", 140)
-                        .attr("height", 200)
-                        .selectAll("g")
-                        .data(color.domain().slice().reverse())
-                        .enter()
-                        .append("g")
-                        .attr("transform", function(d, i) {
-                            return "translate(0," + i * 20 + ")";
-                        });
+                    // // Modified Legend Code from Mike Bostock: http://bl.ocks.org/mbostock/3888852
+                    // var legend = d3.select("body").append("svg")
+                    //     .attr("class", "legend")
+                    //     .attr("width", 140)
+                    //     .attr("height", 200)
+                    //     .selectAll("g")
+                    //     .data(color.domain().slice().reverse())
+                    //     .enter()
+                    //     .append("g")
+                    //     .attr("transform", function(d, i) {
+                    //         return "translate(0," + i * 20 + ")";
+                    //     });
 
-                    legend.append("rect")
-                        .attr("width", 18)
-                        .attr("height", 18)
-                        .style("fill", color);
+                    // legend.append("rect")
+                    //     .attr("width", 18)
+                    //     .attr("height", 18)
+                    //     .style("fill", color);
 
-                    legend.append("text")
-                        .data(legendText)
-                        .attr("x", 24)
-                        .attr("y", 9)
-                        .attr("dy", ".35em")
-                        .text(function(d) {
-                            return d;
-                        });
-                });
+                    // legend.append("text")
+                    //     .data(legendText)
+                    //     .attr("x", 24)
+                    //     .attr("y", 9)
+                    //     .attr("dy", ".35em")
+                    //     .text(function(d) {
+                    //         return d;
+                    //     });
+                // });
 
             });
 
@@ -306,7 +306,7 @@
             	<div class="row">
             	<div class="col-sm-7">
             	<h2 class="featurette-heading">Find Your Representatives
-                <span class="text-muted">By Location</span></h2>
+                <br><span class="text-muted">By Location</span></h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et molestiae similique eligendi reiciendis sunt distinctio odit? Quia, neque, ipsa, adipisci quisquam ullam deserunt accusantium illo iste exercitationem nemo voluptates asperiores.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et molestiae similique eligendi reiciendis sunt distinctio odit? Quia, neque, ipsa, adipisci quisquam ullam deserunt accusantium illo iste exercitationem nemo voluptates asperiores.</p>
             </div>
 			<div class="col-sm-1"></div>
@@ -616,7 +616,32 @@
 
     <hr class="featurette-divider">
 
+<!-- // ################## Pop Words #################### -->
+
+    <hr class="featurette-divider" id="statewords">
+    <div class="featurette">
+            <p class="lead">
+            <div class="container">
+                <div class="row">
+                <div class="col-sm-5">
+                <img class="featurette-image img-circle img-responsive pull-left" src="http://placehold.it/500x500">
+                </div>
+                <div class="col-sm-1"></div>
+                <div class="col-sm-5">
+                <h2 class="featurette-heading">Most Popular Words
+                <span class="text-muted">Used by State Legislators</span></h2>
+
+            <!-- Access Sunlight API via server  -->
+            <form action="/topwords_per_state" method="POST" role="form" class="form-horizontal">
+                <div class="form-group">
+                        <label for="word" class="col-sm-2 control-label">Word:</label><br>
+                        <!-- Accept word from user  -->
+                        <input type="text" class="form-control" name="word" id="word" required>
+                    </div>
+                <div>
+
 <!-- ################## Footer #################### -->
+
     <footer>
         <div class="row">
             <div class="col-lg-12">
@@ -626,6 +651,7 @@
             </div>
         </div>
     </footer>
+
     <!-- /.container -->
     </div>
     <!-- jQuery -->

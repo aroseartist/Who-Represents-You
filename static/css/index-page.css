@@ -10,8 +10,8 @@ body {
     margin-top: 50px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
-.rep-image {
-    height: 275px;
+#rep-image.img-circle.img-responsive {
+    height: 275px !important;
 }
 
 .header-image {
