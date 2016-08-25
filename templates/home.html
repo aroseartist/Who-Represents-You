@@ -408,13 +408,13 @@
 			<figure id="rep-image">
                 <img class="img-circle img-responsive" alt="" src="https://theunitedstates.io/images/congress/225x275/{{ key['bioguide_id'] }}.jpg">
             </figure>
-			</div>
+			</div><p></p>
 
 			<!-- USER TITLE -->
 			<div class="profile-usertitle">
 				<div class="profile-usertitle-name">
 					{{ key['first_name'] }} {{ key['last_name'] }}
-				</div>
+				</div><p></p>
 				<div class="profile-usertitle-details">
 					{{ key['chamber'].capitalize() }} | District: {{ key['district'] }}
 				</div>
@@ -452,6 +452,10 @@
 						Tasks </a>
 					</li>
 				</ul>
+                <p></p>
+            <div class="rep-tweets">
+                <a class="twitter-timeline" data-height="1000" href="https://twitter.com/{{ key['twitter_id'] }}">Tweets by {{ key['first_name'] }} {{ key['last_name'] }}</a>
+                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 			</div>
 			<div class="col-sm-1"></div>
 		</div>
@@ -468,13 +472,13 @@
 			<figure>
                 <img class="img-circle img-responsive" id="rep-image" width="225" height="275" src="{{ key['photo_url'] }}">
             </figure>
-			</div>
+			</div><p></p>
 
 			<!-- USER TITLE -->
 			<div class="profile-usertitle">
 				<div class="profile-usertitle-name">
 					{{ key['full_name'] }}
-				</div>
+				</div><p></p>
 				<div class="profile-usertitle-details">
 					{{ key['chamber'].capitalize() }} | District: {{ key['district'] }}
 				</div>
@@ -521,7 +525,7 @@
 	</div>
 	{% endif %}
 
-<!-- // ################## State Words #################### -->
+<!-- // ################## Pop State Words #################### -->
 
     <hr class="featurette-divider" id="statewords">
     <div class="featurette">
@@ -538,12 +542,6 @@
 
 			<!-- Access Sunlight API via server  -->
 			<form action="/topwords_per_state" method="POST" role="form" class="form-horizontal">
-                <div class="form-group">
-  						<label for="word" class="col-sm-2 control-label">Word:</label><br>
-                        <!-- Accept word from user  -->
-                        <input type="text" class="form-control" name="word" id="word" required>
-                    </div>
-                <div>
 					<div class="form-group">
   						<label for="state" class="col-sm-2 control-label">State:</label><br>
   						<select name="state" id="state" class="form-control">
@@ -616,33 +614,53 @@
 
     <hr class="featurette-divider">
 
+<!-- ################## Pop State Words Details #################### -->
+
+    {% if state %}
+    <hr class="featurette-divider">
+    <p class="lead">
+    <div class="container">
+    <h1 class="featurette-heading">Representative
+        <span class="text-muted">Details for</span>
+        {{ city }} and {{ state }}</h1>
+        <p></p>
+
+    <!-- Sunlight Congress API data  -->
+        <div class="row">
+        {% for key in leg_details_congress %}
+
 <!-- // ################## Pop Words #################### -->
 
-    <hr class="featurette-divider" id="statewords">
+    <hr class="featurette-divider" id="popwords">
     <div class="featurette">
-            <p class="lead">
-            <div class="container">
-                <div class="row">
+        <p class="lead">
+        <div class="container">
+            <div class="row">
                 <div class="col-sm-5">
-                <img class="featurette-image img-circle img-responsive pull-left" src="http://placehold.it/500x500">
+                    <h2 class="featurette-heading">Most Popular Words
+                    <span class="text-muted">Used by Congress</span></h2>
                 </div>
                 <div class="col-sm-1"></div>
                 <div class="col-sm-5">
-                <h2 class="featurette-heading">Most Popular Words
-                <span class="text-muted">Used by State Legislators</span></h2>
+                    <img class="featurette-image img-circle img-responsive pull-right" src="http://placehold.it/500x500">
+                </div>
 
             <!-- Access Sunlight API via server  -->
-            <form action="/topwords_per_state" method="POST" role="form" class="form-horizontal">
+                <form action="/topwords_per_state" method="POST" role="form" class="form-horizontal">
                 <div class="form-group">
-                        <label for="word" class="col-sm-2 control-label">Word:</label><br>
-                        <!-- Accept word from user  -->
-                        <input type="text" class="form-control" name="word" id="word" required>
-                    </div>
-                <div>
+                    <label for="word" class="col-sm-2 control-label">Word:</label><br>
+                    <!-- Accept word from user  -->
+                    <input type="text" class="form-control" name="word" id="word" required>
+                </div>
+            </div>
+        </div>
+        </p>
+    </div>
 
 <!-- ################## Footer #################### -->
 
     <footer>
+        <hr class="featurette-divider" id="footer">
         <div class="row">
             <div class="col-lg-12">
                 <p>
