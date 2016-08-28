@@ -7,13 +7,33 @@
 
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
+@import url(http://fonts.googleapis.com/css?family=Special+Elite);
+
 html {
-    font-family: sans-serif;
+    font-family: "Special Elite", serif;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%
 }
 
+div {
+    font-family: "Special Elite", serif;
+}
+
+#topwordscontainer{
+    font-size: 30px;
+    font-variant: small-caps;
+    color: red;
+    text-align: center;
+    word-spacing: 20px;
+}
+
+#rep-image {
+    max-width: 225px;
+    max-height: 275px;
+}
+
 body {
+    font-family: "Special Elite", serif;
     margin: 0
 }
 
@@ -74,6 +94,7 @@ dfn {
 }
 
 h1 {
+    font-family: "Special Elite", serif;
     margin: .67em 0;
     font-size: 2em
 }
@@ -270,11 +291,12 @@ th {
         page-break-inside: avoid
     }
     img {
-        max-width: 100%!important
+        max-width: 100%
     }
     h2,
     h3,
     p {
+        font-family: "Special Elite", serif;
         orphans: 3;
         widows: 3
     }
@@ -1391,7 +1413,7 @@ html {
 }
 
 body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Special Elite", serif;
     font-size: 14px;
     line-height: 1.42857143;
     color: #333;
@@ -1507,7 +1529,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: inherit;
+    font-family: "Special Elite", serif;
     font-weight: 500;
     line-height: 1.1;
     color: inherit
@@ -7169,7 +7191,7 @@ button.close {
     position: absolute;
     z-index: 1070;
     display: block;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Special Elite", serif;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -7303,7 +7325,7 @@ button.close {
     display: none;
     max-width: 276px;
     padding: 1px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Special Elite", serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -7609,7 +7631,7 @@ button.close {
 .carousel-control .icon-prev {
     width: 20px;
     height: 20px;
-    font-family: serif;
+    font-family: "Special Elite", serif;
     line-height: 1
 }
 

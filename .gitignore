@@ -1,5 +1,5 @@
 
-*.DS_Store
+.DS_Store
 *._
 .TemporaryItems
 .Trashes
@@ -12,7 +12,15 @@ seed_data/
 python-sunlight/
 .vagrant/
 env/
+venv/
+/env
+/venv
 
 secrets.sh
 api.py
 *.sunlight.key
+
+.git
+index.js
+node_modules
+package.json

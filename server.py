@@ -56,47 +56,6 @@ def index():
 def statejsonroot():
     return app.send_static_file('us-states.json')
 
-# #################### Used for D3 ############### #############
-
-# @app.route('/topwords_perstate_2map')
-# def topwords_per_state_JSON2List(topwords_per_state_list):
-# 	topwords_per_state = sunlight.capitolwords.phrases(entity_type='state', entity_value=state, page=0)
-# 	topwords_per_state_list = topwords_per_state_JSON2List(topwords_per_state)
-# 	# return jsonify(data=state_words_list)
-# 	return jsonify({'data':topwords_per_state_list})
-
-# @app.route('/us_topword_2map')
-# def real_usword_usedwhere_JSON2List(usword_usedwhere):
-# 	usword_usedwhere = sunlight.capitolwords.phrases_by_entity(entity_type='state', phrase="war", per_page=10)
-	
-# 	usword_usedwhere_list = usword_usedwhere_JSON2List(usword_usedwhere)
-# 	# return jsonify(data=state_words_list)
-# 	return jsonify(usword_usedwhere_list)
-# 	# a_real_list = list(usword_usedwhere)
-# 	# loop through each state/count combo, add capital, lat long, count.
-
-
-
-# 	# import pdb; pdb.set_trace()
-# 	# resp = jsonify(data=a_real_list)
-# 	# return resp
-# #################### Used for D3 .csv Files ###################
-
-@app.route('/countstate')
-# Routes data file to map
-def countstate():
-    return app.send_static_file('count_state.csv')
-
-@app.route('/city')
-# Routes data file to map
-def cityroot():
-    return app.send_static_file('cities-lived.csv')
-
-@app.route('/state')
-# Routes data file to map
-def stateroot():
-    return app.send_static_file('stateslived.csv')
-
 ##################### API calls ###############################
 
 @app.route('/repdetails', methods=['POST'])
@@ -126,7 +85,7 @@ def gather_sunlight_congress():
 	# Returns as JSON EntityList
 	leg_details_congress = sunlight.congress.locate_legislators_by_lat_lon(latlng[0], latlng[1])
 	leg_details_openstates = sunlight.openstates.legislator_geo_search(latlng[0], latlng[1])
-	
+
 	# Pass returned JSON details to Jinja
 	return render_template("home.html",
 							leg_details_congress=leg_details_congress,
@@ -134,10 +93,55 @@ def gather_sunlight_congress():
 							state=state,
 							city=city)
 
-# for use later: click on leg_list link for each leg to get full details
-# @app.route("/get-full-profile/<int:add unique id here>")
-# can use ajax here to present more info about leg
+##################### AJAX calls #############################
 
+@app.route('/getstatewords.json')
+def getstatewords():
+	clickedstate = request.args.get('state')
+
+	# Access key for Sunlight API
+	sunlight.config.KEY_ENVVAR = 'SUNLIGHT_API_KEY'
+	
+	# Get form variables from home.html user input
+	# Send query to sunlight requesting words data
+	topwords_per_state = sunlight.capitolwords.phrases(entity_type='state', entity_value=clickedstate, per_page=15)
+	list_of_tuples = []
+
+	for count_dict in topwords_per_state:
+		# make a tuple
+		count = count_dict['count']
+		word = count_dict['ngram']
+		cw_tuple = (count, word)
+		list_of_tuples.append(cw_tuple)
+
+	list_of_tuples.reverse()
+
+	return jsonify({'topwords':list_of_tuples})
+
+
+@app.route('/getlegwords.json')
+def getlegwords():
+	clickedleg = request.args.get('bioguide_id')
+
+	# Access key for Sunlight API
+	sunlight.config.KEY_ENVVAR = 'SUNLIGHT_API_KEY'
+	
+	# Get form variables from home.html user input
+	# Send query to sunlight requesting words data
+	topwords_per_leg = sunlight.capitolwords.phrases(entity_type='legislator', entity_value=clickedleg, per_page=15)
+	
+	list_of_tuples = []
+
+	for count_dict in topwords_per_leg:
+		# make a tuple
+		count = count_dict['count']
+		word = count_dict['ngram']
+		cw_tuple = (count, word)
+		list_of_tuples.append(cw_tuple)
+
+	list_of_tuples.reverse()
+
+	return jsonify({'topwords':list_of_tuples})
 
 
 # @app.route('/topwords', methods=['POST'])

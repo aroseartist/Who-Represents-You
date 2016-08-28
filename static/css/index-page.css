@@ -10,15 +10,77 @@ body {
     margin-top: 50px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
-#rep-image.img-circle.img-responsive {
-    height: 275px !important;
+<!-- CSS Style -->
+    <style type="text/css">
+
+    /* On mouse hover, lighten state color */   
+    path:hover {
+        fill-opacity: .7;
+    }
+
+    /* Style for Custom Tooltip */
+    div.tooltip {
+        font-family: "Special Elite", serif;
+        position: absolute;
+        text-align: center;
+        width: 60px;
+        height: 28px;
+        padding: 2px;
+        font: 12px sans-serif;
+        background: white;
+        border: 0px;
+        border-radius: 8px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 1s;
+    }
+
+    /* Sizing representative images */
+    img.rep-image {
+        max-width: 50%;
+        max-height: 50%;
+    }
+
+    .d3-map {
+        position: relative;
+        width: 100%;
+    }
+
+    .node {
+        stroke: #fff;
+        stroke-width: 1.5px;
+    }
+
+    .link {
+          fill: none;
+          stroke: #bbb;
+    }
+
+    </style>
+
+#rep-image {
+    max-width: 225px;
+    max-height: 275px;
+}
+
+.tooltip {
+    font-family: "Special Elite", serif;
+}
+
+.profile-usertitle-name {
+    font-size: 30px;
+}
+
+.profile-usertitle-details {
+    font-size: 15px;
 }
 
 .header-image {
     display: block;
     width: 100%;
+    height: 300;
     text-align: center;
-    background: url('/static/img/rbw_background.jpg') no-repeat center center scroll;
+    background: url('/static/img/clipart3.jpg') no-repeat center center scroll;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -62,7 +124,7 @@ body {
 }
 
 footer {
-    margin: 50px 0;
+    margin: 15px 0;
 }
 
 @media(max-width:1200px) {
