@@ -1,728 +1,735 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        {% block head %}
-            <meta charset="utf-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <meta name="description" content="Hackbright Project">
-            <meta name="author" content="Lora Rose">
-            <title>Hackbright Project</title>
-            <!-- Bootstrap Core CSS -->
-            <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-            <!-- Custom CSS -->
-            <link rel="stylesheet" href="/static/css/index-page.css">
-            <!-- jQuery -->
-            <script src="/static/js/jquery.js"></script>
-            <!-- Bootstrap Core JavaScript -->
-            <script src="/static/js/bootstrap.min.js"></script>
-            <!-- Access to D3 paths -->
-            <script src="https://d3js.org/d3.v3.js"></script>
-            <!-- jQuery -->
-            <script type="text/javascript" src="https://ajax.microsoft.com/ajax/jQuery/jquery-1.4.2.min.js"></script>
-            <!-- Twitter widget script -->
-            <script>
-            window.twttr = (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0],
-            t = window.twttr || {};
-            if (d.getElementById(id)) return t;
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "https://platform.twitter.com/widgets.js";
-            fjs.parentNode.insertBefore(js, fjs);
-            t._e = [];
-            t.ready = function(f) {
-            t._e.push(f);
-            };
-            return t;
+
+<head>
+{% block head %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hackbright Project">
+    <meta name="author" content="Lora Rose">
+    <title>Hackbright Project</title>
+    
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/index-page.css">
+    <!-- Font Awesome SM icons -->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <!-- Access to D3 paths -->
+    <script src="https://d3js.org/d3.v3.js"></script>
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://ajax.microsoft.com/ajax/jQuery/jquery-1.4.2.min.js"></script>
+{% endblock head %}
+</head>
+
+<body>
+{% block body %}
+
+<!-- ################## Navigation Bar #################### -->
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle grouped for mobile -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <!-- Collect the nav links, etc for toggling -->
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#home">Home</a></li>
+                <li><a href="#representatives">Representatives</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#about"><span class="glyphicon glyphicon-user"></span> About</a></li>
+            </ul>
+        </div>
+    </div>
+    </nav>
+           
+<!-- ################## Map #################### -->
+
+{% block map %}
+    <div class="featurette" id="home">
+    <div class="container">
+    <div class="row">
+        <div class="col-sm-9" id="d3-map">
+            <script type="text/javascript">
+            // Width and height of map
+            var w = 1000;
+            var h = 700;
+            // D3 Projection
+            var projection = d3.geo.albersUsa()
+                // Translate to center of screen
+                .translate([w / 2, h / 2])
+                // Scale things down so see entire US
+                .scale([1100]);
+            // Defines path generator to convert GeoJSON to SVG
+            var path = d3.geo.path()
+                // Tell path generator to use albersUsa projection
+                .projection(projection);
+            //Creates SVG element and append map to the SVG
+            var svg = d3.select("#d3-map")
+                .append("svg:svg")
+                .attr("width", w)
+                .attr("height", h);
+            // Accept state param from state path click
+            function getstate(state) {
+                var params = {
+                    'state': state
+                };
+                // Pass to server route for access to API and return with response to showTopWords function
+                $.get('/getstatewords.json', params, showTopWords);
             }
-            (document, "script", "twitter-wjs"));
+            // Accept response from API via server
+            function showTopWords(resp) {
+                console.log(resp);
+                var listOfTopWords = resp.topwords;
+                $('#topwordscontainer').html("");
+                if (listOfTopWords.length > 0) {
+                    // Iterate over the list and pull out word & count to add to tuples and pass to container
+                    for (var i = 0; i < listOfTopWords.length; i++) {
+                        var topWord = listOfTopWords[i];
+                        var count = topWord[0];
+                        var ngram = topWord[1];
+                        var countNgram = "<br>" + ngram;
+                        $('#topwordscontainer').append(countNgram);
+                }
+                // Upon function call, show elements:
+                $('#popwords-divider').show();
+                $('#popwords-featurette').show();
+                }
+            }
+            // This code generate paths without mapping to other data
+            // Load JSON file and generate path for each state
+            d3.json("/statejson", function(json) { // file path, callback function called when data loaded
+                svg.selectAll("path") // creates empty references to all the paths
+                    .data(json.features) // loop through our data (the states in the array) and bind to paths
+                    .enter() // create placeholder to reference the new elements
+                    .append("path") // add to the DOM!
+                    .attr("d", path) // generate paths for each state
+                    .style("fill", "steelblue")
+                    // Click on state kicks off State Words API call
+                    .on("click", function(d) {
+                        getstate(d.state);
+                    });
+            });
             </script>
-        {% endblock head %}
-    </head>
-    <body>
-        {% block body %}
-            <!-- ################## Navigation Bar #################### -->
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                <div class="container">
-                    <!-- Brand and toggle grouped for mobile -->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                    <!-- Collect the nav links, forms, etc for toggling -->
-                    <div class="collapse navbar-collapse" id="myNavbar">
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="/">Home</a></li>
-                            <li><a href="#representatives">Representatives</a></li>
-                            <li><a href="#popwords">Popular Words</a></li>
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#contact"><span class="glyphicon glyphicon-user"></span> Contact</a></li>
-                        </ul>
-                        <!-- /.navbar-collapse -->
-                    </div>
-                    <!-- /.container -->
+        </div>
+
+<!-- ############## Top State Words Details ################ -->
+
+        <div class="row">
+            <div class="col-sm-3">
+                <p></p>
+                <h1>.</h1>
+                <!-- Show top state words upon state click -->
+                <p id="topwordscontainer"></p>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+{% endblock map %}
+
+<!-- ################## Find Reps #################### -->
+
+    <hr class="featurette-divider" id="representatives">
+    <div class="featurette" id="repdetails">
+        <p class="lead">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-7">
+                    <!-- Search fields for Rep Search -->
+                    <h2 class="featurette-heading">Find Your Representatives
+                    <br><span class="text-muted">By Location</span></h2>
                 </div>
-            </nav>
-            <!-- ############## Pop State Words Details ################ -->
-            <div class="featurette" id="popwords-featurette" hidden>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-10" id="topwordscontainer">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-4">
+                    <form id="submitcitystate" method="post" action="/repdetails">
+                        <div class="form-group" id="city">
+                            <label for="city" class="col-sm-2 control-label">City:</label>
+                            <br>
+                            <!-- Text input for city -->
+                            <input type="text" class="form-control" name="city" id="city" required>
                         </div>
-                        <div class="col-sm-1"></div>
+                        <p></p>
+                        <div class="form-group" id="state">
+                            <label for="state" class="col-sm-2 control-label">State:</label>
+                            <br>
+                            <select name="state" id="state" class="form-control" required>
+                                <!-- Drop down menu for choosing state
+                                and display a certain length -->
+                                <option value="AL">Alabama</option>
+                                <option value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="DC">District Of Columbia</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LA">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+                            </select>
+                        </div>
+                        <p></p>
+                        <!-- Submit user input to server.py for submission to Sunlight API  -->
+                        <div class="form-group">
+                            <div class="col-sm-offset-1 col-sm-10">
+                                <button type="submit" class="btn btn-default">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </p>
+    </div>
+
+<!-- ################## Rep Details #################### -->
+
+    {% if city %}
+    <hr class="featurette-divider">
+        <p class="lead">
+        <div class="container">
+            <center>
+            <h1 class="featurette-heading">Representative
+            <span class="text-muted">Details for</span>
+            <br>{{ city }} and {{ state }}</h1>
+            </center>
+            <br></br>
+
+<!-- ################ Pres / Vice / FLOTUS ################ -->
+
+            <div class="row">
+                <!-- President -->
+                <!-- USERPIC -->
+                <div class="col-sm-4">
+                    <div class="profile-userpic">
+                        <center>
+                        <figure id="fed-image">
+                            <img class="img-circle img-responsive" alt="" src="/static/img/bobama.jpg" alt="Barack Obama photo"></figure>
+                        </center>
+                    </div>
+                    <p></p>
+                    <!-- USER TITLE -->
+                    <div class="profile-usertitle">
+                        <center>
+                        <div class="profile-usertitle-name">
+                            Barack Obama</div>
+                        <p></p>
+                        <div class="profile-usertitle-details">
+                            Commander in Chief</div>
+                        </center>
+                    </div>
+                    <!-- LABELS -->
+                    <div class="profile-userlabels">
+                        <center>
+                        <h3><span class="label label-primary">
+                            Democrat</span></h3>
+                        </center>
+                    </div>
+                    <!-- MENU -->
+                    <div class="profile-usermenu">
+                        <center>
+                        <ul class="nav">
+                            <li class="active">
+                                <a href="http://www.whitehouse.gov/administration/president_obama/" target="_blank">
+                                <i class="glyphicon glyphicon-home"></i> Website </a>
+                            </li>
+                            <li>
+                                <a href="tel://202-456-1111">
+                                <i class="glyphicon glyphicon-phone-alt"></i> 202-456-1111 </a>
+                            </li>
+                            <li>
+                                <a href="http://www.whitehouse.gov/contact/organization" target="_blank">
+                                <i class="glyphicon glyphicon-envelope"></i> Email </a>
+                            </li>
+                            <li>
+                                <a href="https://www.facebook.com/barackobama" target="_blank">
+                                <i class="glyphicon glyphicon-thumbs-up"></i> Facebook </a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/user/BarackObamadotcom/" target="_blank">
+                                <i class="glyphicon glyphicon-expand"></i> Youtube </a>
+                            </li>
+                            <!-- TWITTER -->
+                            <li>
+                                <div class="rep-tweets">
+                                    <a class="twitter-timeline" data-height="500" href="https://twitter.com/POTUS">Tweets by Barack Obama</a>
+                                    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                                </div>
+                            </li>
+                        </ul>
+                        </center>
+                    </div>
+                </div>
+                <!-- Vice President -->
+                <!-- USERPIC -->
+                <div class="col-sm-4">
+                    <div class="profile-userpic">
+                        <center>
+                        <figure id="fed-image">
+                        <img class="img-circle img-responsive" alt="" src="/static/img/jbiden.jpg" alt="Joseph Biden photo" data-pin-nopin="true"></figure>
+                        </center>
+                    </div>
+                    <p></p>
+                    <!-- USER TITLE -->
+                    <div class="profile-usertitle">
+                        <center>
+                        <div class="profile-usertitle-name">
+                            Joseph 'Joe' Biden</div>
+                        <p></p>
+                        <div class="profile-usertitle-details">
+                            Vice President</div>
+                        </center>
+                    </div>
+                    <!-- LABELS -->
+                    <div class="profile-userlabels">
+                        <center>
+                        <h3><span class="label label-primary">
+                            Democrat</span></h3>
+                        </center>
+                    </div>
+                    <!-- MENU -->
+                    <div class="profile-usermenu">
+                        <center>
+                        <ul class="nav">
+                            <li class="active">
+                                <a href="http://www.whitehouse.gov/administration/vice_president_biden" target="_blank">
+                                <i class="glyphicon glyphicon-home"></i> Website </a>
+                            </li>
+                            <li>
+                                <a href="tel://202-456-7000">
+                                <i class="glyphicon glyphicon-phone-alt"></i> 202-456-7000 </a>
+                            </li>
+                            <li>
+                                <a href="http://www.whitehouse.gov/contact/organization" target="_blank">
+                                <i class="glyphicon glyphicon-envelop"></i> Email </a>
+                            </li>
+                            <li>
+                                <a href="https://www.facebook.com/VicePresidentBiden" target="_blank">
+                                <i class="glyphicon glyphicon-thumbs-up"></i> Facebook </a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UCwNZSNHEknVMkj7Z2622ZHg" target="_blank">
+                                <i class="glyphicon glyphicon-expand"></i> Youtube </a>
+                            </li>
+                            <!-- TWITTER -->
+                            <li>
+                                <div class="rep-tweets">
+                                    <a class="twitter-timeline" data-height="500" href="https://twitter.com/JoeBiden">Tweets by Joe Biden</a>
+                                    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                                </div>
+                            </li>
+                        </ul>
+                        </center>
+                    </div>
+                </div>
+                <!-- FLOTUS -->
+                <!-- USERPIC -->
+                <div class="col-sm-4">
+                    <div class="profile-userpic">
+                        <center>
+                        <figure id="fed-image">
+                        <img class="img-circle img-responsive" alt="" src="/static/img/mobama.jpg" alt="Michelle Obama photo"></figure>
+                        </center>
+                    </div>
+                    <p></p>
+                    <!-- USER TITLE -->
+                    <div class="profile-usertitle">
+                        <center>
+                        <div class="profile-usertitle-name">
+                            Michelle Obama</div>
+                        <p></p>
+                        <div class="profile-usertitle-details">
+                            First Lady</div>
+                        </center>
+                    </div>
+                    <!-- LABELS -->
+                    <div class="profile-userlabels">
+                        <center>
+                        <h3><span class="label label-primary">
+                            Democrat</span></h3>
+                        </center>
+                    </div>
+                    <!-- MENU -->
+                    <div class="profile-usermenu">
+                        <center>
+                        <ul class="nav">
+                            <li class="active">
+                                <a href="http://www.whitehouse.gov/" target="_blank">
+                                <i class="glyphicon glyphicon-home"></i> Website </a>
+                            </li>
+                            <li>
+                                <a href="tel://202-456-1414">
+                                <i class="glyphicon glyphicon-phone-alt"></i> 202-456-1414 </a>
+                            </li>
+                            <li>
+                                <a href="mailto://first.lady@whitehouse.gov" target="_blank">
+                                <i class="glyphicon glyphicon-envelope"></i> Email </a>
+                            </li>
+                            <li>
+                                <a href="https://www.facebook.com/michelleobama" target="_blank">
+                                <i class="glyphicon glyphicon-thumbs-up"></i> Facebook </a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/channel/UC8CuzMOKMhCkldSAlaEurhg" target="_blank">
+                                <i class="glyphicon glyphicon-expand"></i> Youtube </a>
+                            </li>
+                            <!-- TWITTER -->
+                            <li>
+                                <div class="rep-tweets">
+                                    <a class="twitter-timeline" data-height="500" href="https://twitter.com/FLOTUS">Tweets by Michelle Obama</a>
+                                    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                                </div>
+                            </li>
+                        </ul>
+                        </center>
                     </div>
                 </div>
             </div>
-            <!-- ################## Map #################### -->
-            {% block map %}
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-9" id="d3-map">
-                            <script type="text/javascript">
-                            // Width and height of map
-                            var w = 1000;
-                            var h = 700;
-                            // D3 Projection
-                            var projection = d3.geo.albersUsa()
-                                // Translate to center of screen
-                                .translate([w / 2, h / 2])
-                                // Scale things down so see entire US
-                                .scale([1300]);
-                            // Defines path generator to convert GeoJSON to SVG
-                            var path = d3.geo.path()
-                                // tell path generator to use albersUsa projection
-                                .projection(projection);
-                            // Define linear scale for output
-                            var color = d3.scale.linear()
-                                .range(["rgb(223,209,206)", "rgb(223,209,206)", "rgb(223,209,206)", "rgb(223,209,206)"]);
-                            //Creates SVG element and append map to the SVG
-                            var svg = d3.select("#d3-map")
-                                .append("svg")
-                                .attr("width", w)
-                                .attr("height", h);
-                            // Append Div for tooltip to SVG
-                            var div = d3.select("#d3-map")
-                                .append("div")
-                                .attr("class", "tooltip")
-                                .style("opacity", 0);
-                                function getstate(state) {
-                                    var params = {
-                                        'state': state
-                                    };
-                                    $.get('/getstatewords.json', params, showTopWords);
-                                }
-                            function showTopWords(resp) {
-                                console.log(resp);
-                                var listOfTopWords = resp.topwords;
-                                $('#topwordscontainer').html("");
-                                if (listOfTopWords.length > 0) {
-                                for (var i = 0; i < listOfTopWords.length; i++) {
-                                    var topWord = listOfTopWords[i];
-                                    var count = topWord[0];
-                                    var ngram = topWord[1];
-                                    var countNgram = ngram + " ";
-                                    $('#topwordscontainer').append(countNgram);
-                                }
-                                    $('#popwords-divider').show();
-                                    $('#popwords-featurette').show();
-                                }
-                            }
-                            // This code generate paths without mapping to other data
-                            // Load JSON file and generate path for each state
-                            d3.json("/statejson", function(json) { // file path, callback function called when data loaded
-                                svg.selectAll("path") // creates empty references to all the paths
-                                    .data(json.features) // loop through our data (the states in the array) and bind to paths
-                                    .enter() // create placeholder to reference the new elements
-                                    .append("path") // add to the DOM!
-                                    .attr("d", path) // generate paths for each state
-                                    .style("fill", "steelblue")
-                                    .on("mouseover", function(d) {
-                                        div.transition()
-                                    .delay(100)
-                                    .duration(300)
-                                    .style("opacity", .9);
-                                        div.text(d.properties.name)
-                                    .style("left", (d3.event.pageX) + "px")
-                                    .style("top", (d3.event.pageY - 28) + "px");
-                                    })
-                                    // fade out tooltip on mouse out
-                                    .on("mouseout", function(d) {
-                                        div.transition()
-                                    .duration(300)
-                                    .style("opacity", 0);
-                                        tooltip.interrupt()
-                                    .transition();
-                                    })
-                                    .on("click", function(d) {
-                                        getstate(d.state);
-                                    });
-                            });
-                            </script>
-                        </div>
+            <hr class="featurette-divider" id="statewords">
+
+<!-- ############## Federal Legislators ################ -->
+
+            <!-- Sunlight Congress API data  -->
+            <div class="row">
+                {% for key in leg_details_congress %}
+                <div class="col-sm-4">
+                    <!-- USERPIC -->
+                    <div class="rep-image">
+                        <center>
+                        <figure id="rep-image">
+                            <img class="img-circle img-responsive" id="rep-image" width="225" height="275" src="https://theunitedstates.io/images/congress/225x275/{{ key['bioguide_id'] }}.jpg"></figure>
+                        </center>
                     </div>
+                    <p></p>
+                    <!-- USER TITLE -->
+                    <div class="profile-usertitle">
+                        <center>
+                        <div class="profile-usertitle-name">
+                            {{ key['first_name'] }} {{ key['last_name'] }}
+                        </div>
+                        <p></p>
+                        <div class="profile-usertitle-details">
+                            {% if key['chamber'] == 'house' %} {{ key['chamber'].capitalize() }} | District: {{ key['district'] }} {% else %} {{ key['chamber'].capitalize() }} {% endif %}
+                        </div>
+                        </center>
+                    </div>
+                    <!-- LABELS -->
+                    <div class="profile-userlabels">
+                        <center><h3>
+                            {% if key['party'] == 'D' %}
+                                <span class="label label-primary">
+                                Democrat</span>
+                                {% elif key['party'] == 'R' %}
+                                <span class="label label-danger">Republican</span>
+                            {% elif key['party'] == 'I' %}
+                                <span class="label label-info">Independent</span>
+                            {% else %}
+                                <span class="label label-success">Green</span>
+                            {% endif %}
+                        </h3></center>
+                    </div>
+                    <!-- MENU -->
+                    <div class="profile-usermenu">
+                        <center>
+                        <ul class="nav">
+                            <li class="active">
+                                <a href="{{ key['website'] }}">
+                                <i class="glyphicon glyphicon-home"></i> Website </a>
+                            </li>
+                            <li>
+                                <a href="tel://1-{{ key['phone'] }}">
+                                <i class="glyphicon glyphicon-phone-alt"></i> {{ key['phone'] }}</a>
+                            </li>
+                            <li>
+                                <a href="mailto://{{ key['contact_form'] }}" target="_blank">
+                                <i class="glyphicon glyphicon-envelope"></i> Email </a>
+                            </li>
+                            <li>
+                                {% if key['facebook_id'] != 'Null' %}
+                                    <a href="http://facebook.com/{{ key['facebook_id'] }}">
+                                        <i class="glyphicon glyphicon-thumbs-up"></i>
+                                    Facebook </a>
+                                {% else %}
+                                {% endif %}
+                            </li>
+                            <li>
+                                {% if key['youtube_id'] != 'Null' %}
+                                    <a href="http://youtube.com/{{ key['youtube_id'] }}">
+                                        <i class="glyphicon glyphicon-expand"></i>
+                                    Youtube </a>
+                                {% else %}
+                                {% endif %}
+                            </li>
+                            <!-- TWITTER -->
+                            <li>
+                                <div class="rep-tweets">
+                                    <a class="twitter-timeline" data-height="500" href="https://twitter.com/{{ key['twitter_id'] }}">Tweets by {{ key['first_name'] }} {{ key['last_name'] }}</a>
+                                    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                                </div>
+                            </li>
+                            <li>
+                                <!-- Button that queries Word Cloud -->
+                                
+                                <input type="button" value="My Words" class="mywords" id="{{ key['bioguide_id'] }}" />
+                            </li>
+                        </ul>
+                        </center>
+                    </div>
+                    <div class="col-sm-1"></div>
                 </div>
-            {% endblock map %}
-            <!-- ################## Find Reps #################### -->
-            <hr class="featurette-divider" id="representatives">
-            <div class="featurette" id="repdetails">
-                <p class="lead">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-7">
-                                <h2 class="featurette-heading">Find Your Representatives
-                                <br><span class="text-muted">By Location</span></h2>
-                            </div>
-                            <div class="col-sm-1"></div>
-                            <div class="col-sm-4">
-                                <form id="submitcitystate" method="post" action="/repdetails">
-                                    <div class="form-group" id="city">
-                                        <label for="city" class="col-sm-2 control-label">City:</label>
-                                        <br>
-                                        <!-- Accept city from user  -->
-                                        <input type="text" class="form-control" name="city" id="city" required>
-                                    </div>
-                                    <p></p>
-                                    <div class="form-group" id="state">
-                                        <label for="state" class="col-sm-2 control-label">State:</label>
-                                        <br>
-                                        <select name="state" id="state" class="form-control" required>
-                                            <!-- Drop down menu for choosing state
-                                            and display a certain length -->
-                                            <option value="AL">Alabama</option>
-                                            <option value="AK">Alaska</option>
-                                            <option value="AZ">Arizona</option>
-                                            <option value="AR">Arkansas</option>
-                                            <option value="CA">California</option>
-                                            <option value="CO">Colorado</option>
-                                            <option value="CT">Connecticut</option>
-                                            <option value="DE">Delaware</option>
-                                            <option value="DC">District Of Columbia</option>
-                                            <option value="FL">Florida</option>
-                                            <option value="GA">Georgia</option>
-                                            <option value="HI">Hawaii</option>
-                                            <option value="ID">Idaho</option>
-                                            <option value="IL">Illinois</option>
-                                            <option value="IN">Indiana</option>
-                                            <option value="IA">Iowa</option>
-                                            <option value="KS">Kansas</option>
-                                            <option value="KY">Kentucky</option>
-                                            <option value="LA">Louisiana</option>
-                                            <option value="ME">Maine</option>
-                                            <option value="MD">Maryland</option>
-                                            <option value="MA">Massachusetts</option>
-                                            <option value="MI">Michigan</option>
-                                            <option value="MN">Minnesota</option>
-                                            <option value="MS">Mississippi</option>
-                                            <option value="MO">Missouri</option>
-                                            <option value="MT">Montana</option>
-                                            <option value="NE">Nebraska</option>
-                                            <option value="NV">Nevada</option>
-                                            <option value="NH">New Hampshire</option>
-                                            <option value="NJ">New Jersey</option>
-                                            <option value="NM">New Mexico</option>
-                                            <option value="NY">New York</option>
-                                            <option value="NC">North Carolina</option>
-                                            <option value="ND">North Dakota</option>
-                                            <option value="OH">Ohio</option>
-                                            <option value="OK">Oklahoma</option>
-                                            <option value="OR">Oregon</option>
-                                            <option value="PA">Pennsylvania</option>
-                                            <option value="RI">Rhode Island</option>
-                                            <option value="SC">South Carolina</option>
-                                            <option value="SD">South Dakota</option>
-                                            <option value="TN">Tennessee</option>
-                                            <option value="TX">Texas</option>
-                                            <option value="UT">Utah</option>
-                                            <option value="VT">Vermont</option>
-                                            <option value="VA">Virginia</option>
-                                            <option value="WA">Washington</option>
-                                            <option value="WV">West Virginia</option>
-                                            <option value="WI">Wisconsin</option>
-                                            <option value="WY">Wyoming</option>
-                                        </select>
-                                    </div>
-                                    <p></p>
-                                    <!-- Submit user input to server.py for submission to Sunlight API  -->
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-1 col-sm-10">
-                                            <button type="submit" class="btn btn-default">Search</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <script src="/static/js/submit.repsearch.js"></script>
-                <!-- ################## Rep Details #################### -->
-                {% if city %}
-                    <hr class="featurette-divider">
-                    <p class="lead">
-                        <div class="container">
-                            <center>
-                            <h1 class="featurette-heading">Representative
-                            <span class="text-muted">Details for</span>
-                            <br>{{ city }} and {{ state }}</h1></center>
-                            <br></br>
-                            <!-- ################ Pres / Vice / FLOTUS ################ -->
-                            <div class="row">
-                                <!-- President -->
-                                <!-- USERPIC -->
-                                <div class="col-sm-4">
-                                    <div class="profile-userpic">
-                                        <center>
-                                        <figure id="fed-image">
-                                            <img class="img-circle img-responsive" alt="" src="/static/img/bobama.jpg" alt="Barack Obama photo">
-                                        </figure>
-                                        </center>
-                                    </div>
-                                    <p></p>
-                                    <!-- USER TITLE -->
-                                    <div class="profile-usertitle">
-                                        <center>
-                                        <div class="profile-usertitle-name">
-                                            Barack Obama
-                                        </div>
-                                        <p></p>
-                                        <div class="profile-usertitle-details">
-                                            Commander in Chief
-                                        </div>
-                                        </center>
-                                    </div>
-                                    <!-- LABELS -->
-                                    <div class="profile-userlabels">
-                                        <center>
-                                        <h3><span class="label label-default">
-                                        Democrat</span></h3></center>
-                                    </div>
-                                    <!-- MENU -->
-                                    <div class="profile-usermenu">
-                                        <center>
-                                        <ul class="nav">
-                                            <li class="active">
-                                                <a href="http://www.whitehouse.gov/administration/president_obama/" target="_blank">
-                                                <i class="glyphicon glyphicon-home"></i> Website </a>
-                                            </li>
-                                            <li>
-                                                <a href="tel://202-456-1111">
-                                                <i class="glyphicon glyphicon-phone-alt"></i> Office Phone </a>
-                                            </li>
-                                            <li>
-                                                <a href="http://www.whitehouse.gov/contact/organization" target="_blank">
-                                                <i class="glyphicon glyphicon-envelope"></i> Email </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.facebook.com/barackobama" target="_blank">
-                                                <i class="glyphicon glyphicon-thumbs-up"></i> Facebook </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.youtube.com/user/BarackObamadotcom/" target="_blank">
-                                                <i class="glyphicon glyphicon-expand"></i> Youtube </a>
-                                            </li>
-                                            <!-- TWITTER -->
-                                            <li>
-                                                <div class="rep-tweets">
-                                                    <a class="twitter-timeline" data-height="500" href="https://twitter.com/POTUS">Tweets by Barack Obama</a>
-                                                    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                        </center>
-                                    </div>
-                                </div>
-                                <!-- Vice President -->
-                                <!-- USERPIC -->
-                                <div class="col-sm-4">
-                                    <div class="profile-userpic">
-                                        <center>
-                                        <figure id="fed-image">
-                                        <img class="img-circle img-responsive" alt="" src="/static/img/jbiden.jpg" alt="Joseph Biden photo" data-pin-nopin="true"></figure>
-                                        </center>
-                                    </div>
-                                    <p></p>
-                                    <!-- USER TITLE -->
-                                    <div class="profile-usertitle">
-                                        <center>
-                                        <div class="profile-usertitle-name">
-                                            Joseph 'Joe' Biden Jr.
-                                        </div>
-                                        <p></p>
-                                        <div class="profile-usertitle-details">
-                                            Vice President
-                                        </div>
-                                        </center>
-                                    </div>
-                                    <!-- LABELS -->
-                                    <div class="profile-userlabels">
-                                        <center>
-                                        <h3><span class="label label-default">
-                                        Democrat</span></h3></center>
-                                    </div>
-                                    <!-- MENU -->
-                                    <div class="profile-usermenu">
-                                        <center>
-                                        <ul class="nav">
-                                            <li class="active">
-                                                <a href="http://www.whitehouse.gov/administration/vice_president_biden" target="_blank">
-                                                <i class="glyphicon glyphicon-home"></i> Website </a>
-                                            </li>
-                                            <li>
-                                                <a href="tel://202-456-7000">
-                                                <i class="glyphicon glyphicon-phone-alt"></i> Office Phone </a>
-                                            </li>
-                                            <li>
-                                                <a href="http://www.whitehouse.gov/contact/organization" target="_blank">
-                                                <i class="glyphicon glyphicon-envelop"></i> Email </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.facebook.com/VicePresidentBiden" target="_blank">
-                                                <i class="glyphicon glyphicon-thumbs-up"></i> Facebook </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.youtube.com/channel/UCwNZSNHEknVMkj7Z2622ZHg" target="_blank">
-                                                <i class="glyphicon glyphicon-expand"></i> Youtube </a>
-                                            </li>
-                                            <!-- TWITTER -->
-                                            <li>
-                                                <div class="rep-tweets">
-                                                    <a class="twitter-timeline" data-height="500" href="https://twitter.com/JoeBiden">Tweets by Joe Biden</a>
-                                                    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                        </center>
-                                    </div>
-                                </div>
-                                <!-- FLOTUS -->
-                                <!-- USERPIC -->
-                                <div class="col-sm-4">
-                                    <div class="profile-userpic">
-                                        <center>
-                                        <figure id="fed-image">
-                                        <img class="img-circle img-responsive" alt="" src="/static/img/mobama.jpg" alt="Michelle Obama photo"></figure>
-                                        </center>
-                                    </div>
-                                    <p></p>
-                                    <!-- USER TITLE -->
-                                    <div class="profile-usertitle">
-                                        <center>
-                                        <div class="profile-usertitle-name">
-                                            Michelle Obama
-                                        </div>
-                                        <p></p>
-                                        <div class="profile-usertitle-details">
-                                            First Lady
-                                        </div>
-                                        </center>
-                                    </div>
-                                    <!-- LABELS -->
-                                    <div class="profile-userlabels">
-                                        <center>
-                                        <h3><span class="label label-default">
-                                            Democrat
-                                        </span></h3></center>
-                                    </div>
-                                    <!-- MENU -->
-                                    <div class="profile-usermenu">
-                                        <center>
-                                        <ul class="nav">
-                                            <li class="active">
-                                                <a href="http://www.whitehouse.gov/" target="_blank">
-                                                <i class="glyphicon glyphicon-home"></i> Website </a>
-                                            </li>
-                                            <li>
-                                                <a href="tel://202-456-1414">
-                                                <i class="glyphicon glyphicon-phone-alt"></i> Office Phone </a>
-                                            </li>
-                                            <li>
-                                                <a href="mailto://first.lady@whitehouse.gov" target="_blank">
-                                                <i class="glyphicon glyphicon-envelope"></i> Email </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.facebook.com/michelleobama" target="_blank">
-                                                <i class="glyphicon glyphicon-thumbs-up"></i> Facebook </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://www.youtube.com/channel/UC8CuzMOKMhCkldSAlaEurhg" target="_blank">
-                                                <i class="glyphicon glyphicon-expand"></i> Youtube </a>
-                                            </li>
-                                            <!-- TWITTER -->
-                                            <li>
-                                                <div class="rep-tweets">
-                                                    <a class="twitter-timeline" data-height="500" href="https://twitter.com/FLOTUS">Tweets by Michelle Obama</a>
-                                                    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                        </center>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr class="featurette-divider" id="statewords">
-                            <!-- ############## Federal Legislators ################ -->
-                            <!-- Sunlight Congress API data  -->
-                            <div class="row">
-                                {% for key in leg_details_congress %}
-                                    <div class="col-sm-4">
-                                        <!-- USERPIC -->
-                                        <div class="rep-image">
-                                            <center>
-                                            <figure id="rep-image">
-                                                <img class="img-circle img-responsive" id="rep-image" width="225" height="275" src="https://theunitedstates.io/images/congress/225x275/{{ key['bioguide_id'] }}.jpg">
-                                            </figure>
-                                            </center>
-                                        </div>
-                                        <p></p>
-                                        <!-- USER TITLE -->
-                                        <div class="profile-usertitle">
-                                            <center>
-                                            <div class="profile-usertitle-name">
-                                                {{ key['first_name'] }} {{ key['last_name'] }}
-                                            </div>
-                                            <p></p>
-                                            <div class="profile-usertitle-details">
-                                                {% if key['chamber'] == 'house' %} {{ key['chamber'].capitalize() }} | District: {{ key['district'] }} {% else %} {{ key['chamber'].capitalize() }} {% endif %}
-                                            </div>
-                                            </center>
-                                        </div>
-                                        <!-- LABELS -->
-                                        <div class="profile-userlabels">
-                                            <center>
-                                            <h3><span class="label label-default">
-                                                {% if key['party'] == 'D' %}
-                                                    Democrat
-                                                    {% elif key['party'] == 'R' %}
-                                                    Republican
-                                                {% else %}
-                                                    Independent
-                                                {% endif %}
-                                            </span></h3></center>
-                                        </div>
-                                        <!-- MENU -->
-                                        <div class="profile-usermenu">
-                                            <center>
-                                            <ul class="nav">
-                                                <li class="active">
-                                                    <a href="{{ key['website'] }}">
-                                                    <i class="glyphicon glyphicon-home"></i> Website </a>
-                                                </li>
-                                                <li>
-                                                    <a href="tel://1-{{ key['phone'] }}">
-                                                    <i class="glyphicon glyphicon-phone-alt"></i> {{ key['phone'] }}</a>
-                                                </li>
-                                                <li>
-                                                    <a href="mailto://{{ key['contact_form'] }}" target="_blank">
-                                                    <i class="glyphicon glyphicon-envelope"></i> Email </a>
-                                                </li>
-                                                <li>
-                                                    {% if key['facebook_id'] != 'Null' %}
-                                                        <a href="http://facebook.com/{{ key['facebook_id'] }}">
-                                                            <i class="glyphicon glyphicon-thumbs-up"></i>
-                                                        Facebook </a>
-                                                    {% else %}
-                                                    {% endif %}
-                                                </li>
-                                                <li>
-                                                    {% if key['youtube_id'] != 'Null' %}
-                                                        <a href="http://youtube.com/{{ key['youtube_id'] }}">
-                                                            <i class="glyphicon glyphicon-expand"></i>
-                                                        Youtube </a>
-                                                    {% else %}
-                                                    {% endif %}
-                                                </li>
-                                                <!-- TWITTER -->
-                                                <li>
-                                                    <div class="rep-tweets">
-                                                        <a class="twitter-timeline" data-height="500" href="https://twitter.com/{{ key['twitter_id'] }}">Tweets by {{ key['first_name'] }} {{ key['last_name'] }}</a>
-                                                        <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            </center>
-                                        </div>
-                                        <div class="col-sm-1"></div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                            <hr class="featurette-divider" id="statewords">
-                            <!-- ################ State Legislators ################ -->
-                            <!-- Sunlight Open States API data  -->
-                            <div class="row">
-                                {% for key in leg_details_openstates %}
-                                    <div class="col-sm-4">
-                                        <!-- USERPIC -->
-                                        <div class="rep-image">
-                                            <center>
-                                            <figure>
-                                                <img class="rep-image img-circle img-responsive" id="rep-image" width="225" height="275" src="{{ key['photo_url'] }}">
-                                            </figure>
-                                            </center>
-                                        </div>
-                                        <p></p>
-                                        <!-- USER TITLE -->
-                                        <div class="profile-usertitle">
-                                            <center>
-                                            <div class="profile-usertitle-name">
-                                                {{ key['full_name'] }}
-                                            </div>
-                                            <p></p>
-                                            <div class="profile-usertitle-details">
-                                                {% if key['chamber'] == 'upper' %} Senate | District: {{ key['district'] }} {% else %} Congress | District: {{ key['district'] }} {% endif %}
-                                            </div>
-                                            </center>
-                                        </div>
-                                        <!-- LABELS -->
-                                        <div class="profile-userlabels">
-                                            <center>
-                                            <h3><span class="label label-default">
-                                                {{ key['party'] }}
-                                            </span>
-                                            </center>
-                                        </div>
-                                        <!-- MENU -->
-                                        <div class="profile-usermenu">
-                                            <center>
-                                            <ul class="nav">
-                                                <li class="active">
-                                                    <a href="{{ key['url'] }}">
-                                                        <i class="glyphicon glyphicon-home"></i>
-                                                    Website </a>
-                                                </li>
-                                                <li>
-                                                    <a href="tel://{{ key['offices'][0]['phone'] }}">
-                                                        <i class="glyphicon glyphicon-phone-alt"></i>
-                                                    Office Phone </a>
-                                                </li>
-                                            </ul>
-                                            </center>
-                                        </div>
-                                        <div class="col-sm-1"></div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </p>
-                    </div>
-                {% endif %}
-                <!-- // ################## Pop Words #################### -->
-                <hr class="featurette-divider" id="popwords">
-                <div class="featurette">
-                    <p class="lead">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <h2 class="featurette-heading">Most Popular Words<br>
-                                    <span class="text-muted">Used by Congress</span></h2><p></p>
-                                    <!-- Access Sunlight API via server  -->
-                                    <form action="/topwords_per_state" method="POST" role="form" class="form-horizontal">
-                                        <div class="form-group">
-                                            <label for="word" class="col-sm-2 control-label">Word:</label><br>
-                                            <!-- Accept word from user  -->
-                                            <input type="text" class="form-control" name="word" id="word" required>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="col-sm-1"></div>
-                                <div class="col-sm-4">
-                                    <img class="featurette-image img-circle img-responsive pull-right" src="http://placehold.it/500x500">
-                                </div>
-                            </div>
-                        </div>
-                    </p>
-                </div>
-                <!-- // ################## D3 Word Cloud #################### -->
-                {% block wordcloud %}
-                    <div class="featurette" id="poplegwords-featurette" hidden>
-                        <div class="container" id="d3-nodes">
-                            <div class="row">
-                                <div class="col-sm-1"></div>
-                                <div class="col-sm-10" id="toplegwordscontainer">
-                                </div>
-                                <div class="col-sm-1"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <script src="/static/js/d3.js"></script>
-                    <script src="/static/js/d3.layout.cloud.js"></script>
-                    
-                    <script>
-                    var fill = d3.scale.category20();
-                    d3.layout.cloud().size([300, 300])
-                        .words([
-                            "Hello", "world", "normally", "you", "want", "more", "words",
-                            "than", "this"].map(function(d) {
-                            return {text: d, size: 10 + Math.random() * 90};
-                        }))
-                        .rotate(function() { return ~~(Math.random() * 2) * 90; })
-                        .font("Impact")
-                        .fontSize(function(d) { return d.size; })
-                        .on("end", draw)
-                        .start()
-                        .on("click", function(d) {
-                            getbioguide_id(d.bioguide_id);
-                        });
-                    function draw(words) {
-                        d3.select("body").append("svg")
-                        .attr("width", 300)
-                        .attr("height", 300)
-                        .append("g")
-                        .attr("transform", "translate(150,150)")
-                        .selectAll("text")
-                        .data(words)
-                        .enter().append("text")
-                        .style("font-size", function(d) { return d.size + "px"; })
-                        .style("font-family", "Impact")
-                        .style("fill", function(d, i) { return fill(i); })
-                        .attr("text-anchor", "middle")
-                        .attr("transform", function(d) {
-                            return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-                        })
-                        .text(function(d) { return d.text; });
-                    }
-                    function getleg(bioguide_id) {
-                        var params = {
-                            'bioguide_id': bioguide_id
-                        };
-                        $.get('/getlegwords.json', params, showLegWords);
-                    }
-                    function showLegWords(resp) {
-                        console.log(resp);
-                        var listOfLegWords = resp.legwords;
-                        $('#toplegwordscontainer').html("");
-                        if (listOfLegWords.length > 0) {
-                            for (var i = 0; i < listOfLegWords.length; i++) {
-                                var topWord = listOfLegWords[i];
-                                var count = topWord[0];
-                                var ngram = topWord[1];
-                                var countNgram = ngram + " ";
-                                $('#toplegwordscontainer').append(countNgram);
-                            }
-                            $('#poplegwords-divider').show();
-                            $('#poplegwords-featurette').show();
-                        }
-                    }
-                    </script>
-                {% endblock wordcloud %}
-                <!-- ################## Footer #################### -->
-                <footer>
-                    <hr class="featurette-divider" id="footer">
-                    <div class="row">
-                        <div class="col-lg-12" id='toplegwordscontainer'>
-                            <p>
-                                <center>Copyright by <a href="http://www.aroseartist.com/">Lora Rose</a> ©2016</center>
-                            </p>
-                        </div>
-                    </div>
-                </footer>
-                <!-- /.container -->
+                {% endfor %}
             </div>
+            <hr class="featurette-divider" id="statewords">
+
+<!-- ################ State Legislators ################ -->
+
+            <!-- Sunlight Open States API data  -->
+            <div class="row">
+                {% for key in leg_details_openstates %}
+                <div class="col-sm-4">
+                    <!-- USERPIC -->
+                    <div class="rep-image">
+                        <center>
+                        <figure><img class="rep-image img-circle img-responsive" id="rep-image" width="225" height="275" src="{{ key['photo_url'] }}"></figure>
+                        </center>
+                    </div>
+                    <p></p>
+                    <!-- USER TITLE -->
+                    <div class="profile-usertitle">
+                        <center>
+                        <div class="profile-usertitle-name">
+                            {{ key['full_name'] }}
+                        </div>
+                        <p></p>
+                        <div class="profile-usertitle-details">
+                            {% if key['chamber'] == 'upper' %} Senate | District: {{ key['district'] }} {% else %} Congress | District: {{ key['district'] }} {% endif %}
+                        </div>
+                        </center>
+                    </div>
+                    <!-- LABELS -->
+                    <div class="profile-userlabels">
+                        <center><h3>
+                            {% if (key['party'] == 'Democrat') or (key['party'] == 'Democratic') %}
+                                <span class="label label-primary">
+                                Democrat</span>
+                                {% elif key['party'] == 'Republican' %}
+                                <span class="label label-danger">Republican</span>
+                            {% elif key['party'] == 'Independent' %}
+                                <span class="label label-info">Independent</span>
+                            {% else %}
+                                <span class="label label-success">Green</span>
+                            {% endif %}
+                        </h3></center>
+                    </div>
+                    <!-- MENU -->
+                    <div class="profile-usermenu">
+                        <center>
+                        <ul class="nav">
+                            <li class="active">
+                                <a href="{{ key['url'] }}">
+                                <i class="glyphicon glyphicon-home"></i>
+                                Website </a>
+                            </li>
+                            <li>
+                                <a href="tel://{{ key['offices'][0]['phone'] }}">
+                                <i class="glyphicon glyphicon-phone-alt"></i> {{ key['offices'][0]['phone'] }} </a>
+                            </li>
+                        </ul>
+                        </center>
+                    </div>
+                    <div class="col-sm-1"></div>
+                </div>
+                {% endfor %}
+            </div>
+        </p>
+        </div>
+    {% endif %}
+
+<!-- ############## Word Cloud Container ################ -->
+
+{% block wordcloud %}
+    <hr class="featurette-divider" id="toplegwords-divider" hidden>
+    <div class="featurette" id="toplegwords-featurette" hidden>
+        <p class="lead">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-1">
+                    <center>
+                        <h2 class="featurette-heading">Most Popular Words<br><span class="text-muted">Used by Congress</span></h2>
+                    </center>
+                    <p></p>
+                </div>
+                    <div class="col-sm-8" id="toplegwordscontainer">
+                    </div>
+                <div class="col-sm-3">
+                    <img class="featurette-image img-circle img-responsive pull-right" src="http://placehold.it/500x500">
+                </div>
+            </div>
+        </div>
+        </p>
+    </div>
+
+<!-- ################ D3 Word Cloud ################## -->
+
+    <script src="/static/js/d3.js"></script>
+    <script src="/static/js/d3.layout.cloud.js"></script>
+    
+    <script>
+        var width = 750;
+        var height = 500;
+        var fill = d3.scale.category20b();
+
+        $(document).ready(function(){
+            $(".mywords").click(function getleg() {
+                var id = this.id;
+                console.log(id);
+                var params = {
+                    'bioguide_id': id
+                };
+            $.get('/getlegwords.json', params, showLegWords);
+            });
+
+            function showLegWords(resp) {
+                console.log(resp);
+                var listOfLegWords = resp.legwords;
+                $('#toplegwordscontainer').html("");
+                if (listOfLegWords.length > 0) {
+                    for (var i = 0; i < listOfLegWords.length; i++) {
+                        var topWord = listOfLegWords[i];
+                        var size = topWord[0];
+                        var text = topWord[1];
+                        var textSize = text, size;
+                        $('#toplegwordscontainer').append(text, size);
+                    }
+                    $('#toplegwords-divider').show();
+                    $('#toplegwords-featurette').show();
+                }
+            }
+        })
+
+        // deleted textSize
+        d3.layout.cloud().size([width, height])
+            .padding(5)
+            .rotate(function() { return ~~(Math.random() * 2) * 90; })
+            .font("Impact")
+            .fontSize(function(d) { return d.size; })
+            .on("end", draw)
+            .start();       
+
+        function draw(words) {
+            d3.select("body").append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", "translate("+(width/2)+","+(height/2)+")")
+            .selectAll("text")
+            .data(words)
+            .enter().append("text")
+            .style("font-size", function(d) { return d.size + "px"; })
+            .style("font-family", "Impact")
+            .style("fill", function(d, i) { return fill(i); })
+            .attr("text-anchor", "middle")
+            .attr("transform", function(d) {
+                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+            })
+            .text(function(d) { return d.text; });   
+        }
+    </script>
+{% endblock wordcloud %}
+
+<!-- ################## About #################### -->
+
+    <hr class="featurette-divider" id="about">
+    <div class="featurette">
+        <p class="lead">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="featurette-heading">About All The Things
+                    </h2>
+                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                    <p></p>
+                    <div class="text-center">
+                        <h3>Let's Connect! </h3>
+                        <br>
+                        <a href="http://www.aroseartist.com" class="btn btn-social-icon btn-website"><i class="fa fa-location-arrow"></i></a>
+                        <a href="https://github.com/aroseartist/" class="btn btn-social-icon btn-github"><i class="fa fa-github"></i></a>
+                        <a href="https://plus.google.com/+AroseartistLora/posts" class="btn btn-social-icon btn-google-plus"><i class="fa fa-google-plus"></i></a>
+                        <a href="https://www.instagram.com/aroseartist/" class="btn btn-social-icon btn-instagram"><i class="fa fa-instagram"></i></a>
+                        <a href="http://www.linkedin.com/in/aroseartist" class="btn btn-social-icon btn-linkedin"><i class="fa fa-linkedin"></i></a>
+                        <a href="http://twitter.com/ARoseArtist" class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </p>
+    </div>
+
+<!-- ################## Footer #################### -->
+
+    <footer>
+        <hr class="featurette-divider" id="footer">
+        <div class="row">
+            <div class="col-lg-12" id='toplegwordscontainer'>
+                <p><center>Copyright by <a href="http://www.aroseartist.com/">Lora Rose</a> ©2016</center></p>
+            </div>
+        </div>
+    </footer>
             
-        {% endblock %}
-    </body>
+{% endblock %}
+<!-- jQuery -->
+<script src="/static/js/jquery.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="/static/js/bootstrap.min.js"></script>
+</body>
 </html>

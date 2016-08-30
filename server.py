@@ -1,7 +1,7 @@
 """ Server file for Hb project """
-# import necessary modules, etc.
+# Import necessary modules, etc.
 
-# access local env variables
+# Access local env variables
 import os
 import sys
 from sys import argv
@@ -43,7 +43,7 @@ app.jinja_env.undefined = StrictUndefined
 # allows html to reload without restarting server
 app.jinja_env.auto_reload = True
 
-###################### Core routes ###########################
+###################### Core Routes ###########################
 
 @app.route('/')
 # Routes app index page to homepage
@@ -56,7 +56,7 @@ def index():
 def statejsonroot():
     return app.send_static_file('us-states.json')
 
-##################### API calls ###############################
+##################### API Calls ###############################
 
 @app.route('/repdetails', methods=['POST'])
 # Routes details from sunlight Legs api to jinja template
@@ -93,10 +93,15 @@ def gather_sunlight_congress():
 							state=state,
 							city=city)
 
-##################### AJAX calls #############################
+##################### AJAX Calls #############################
 
 @app.route('/getstatewords.json')
 def getstatewords():
+	"""
+	Return most used words by legislators of clicked state
+
+	"""
+	# Accept argument data from D3 map .onclick function
 	clickedstate = request.args.get('state')
 
 	# Access key for Sunlight API
@@ -104,23 +109,29 @@ def getstatewords():
 	
 	# Get form variables from home.html user input
 	# Send query to sunlight requesting words data
-	topwords_per_state = sunlight.capitolwords.phrases(entity_type='state', entity_value=clickedstate, per_page=15)
+	topwords_per_state = sunlight.capitolwords.phrases(entity_type='state', entity_value=clickedstate, per_page=10)
 	list_of_tuples = []
 
 	for count_dict in topwords_per_state:
-		# make a tuple
+		# Make a tuple to pass back to state words container
 		count = count_dict['count']
 		word = count_dict['ngram']
 		cw_tuple = (count, word)
 		list_of_tuples.append(cw_tuple)
 
+	# Put words in descending order by frequency
 	list_of_tuples.reverse()
-
+	# Jsonify list of tuples for use and pass back to container
 	return jsonify({'topwords':list_of_tuples})
 
 
 @app.route('/getlegwords.json')
 def getlegwords():
+	"""
+	Return most used words by a particular legislator
+
+	"""
+	# Accept argument data from legislator event listener function
 	clickedleg = request.args.get('bioguide_id')
 
 	# Access key for Sunlight API
@@ -128,20 +139,24 @@ def getlegwords():
 	
 	# Get form variables from home.html user input
 	# Send query to sunlight requesting words data
-	topwords_per_leg = sunlight.capitolwords.phrases(entity_type='legislator', entity_value=clickedleg, per_page=15)
-	
-	list_of_tuples = []
+	topwords_per_leg = sunlight.capitolwords.phrases(entity_type='legislator', entity_value=clickedleg)
+	tuple_of_words = []
 
 	for count_dict in topwords_per_leg:
-		# make a tuple
-		count = count_dict['count']
-		word = count_dict['ngram']
-		cw_tuple = (count, word)
-		list_of_tuples.append(cw_tuple)
+		# Make a tuple to pass back to legislator words container
+		size = count_dict['count']
+		text = count_dict['ngram']
+		st_tuple = (size, text)
+		tuple_of_words.append(st_tuple)
 
-	list_of_tuples.reverse()
+	# Put words in order by frequency
+	tuple_of_words.sort()
 
-	return jsonify({'topwords':list_of_tuples})
+	# Sort descending
+	tuple_of_words.reverse()
+
+	# Jsonify list of tuples for use and pass back to container
+	return jsonify({'legwords':tuple_of_words})
 
 
 # @app.route('/topwords', methods=['POST'])
@@ -155,78 +170,46 @@ def getlegwords():
 # 	# Get form variables from home.html user input
 # 	word = request.form["word"]
 # 	# Send query to sunlight requesting words data
-# 	us_topwords_usedwhere = sunlight.capitolwords.phrases_by_entity(entity_type='state', phrase=word, per_page=10)
+# 	us_topwords_usedwhere = sunlight.capitolwords.phrases_by_entity(entity_type='state', phrase=word, per_page=50)
 
 # 	# Convert JSON into dictionary, then call next function
 # 	# from model.py: topwords_per_state_JSON2List(topwords_per_state)
 # 	us_topwords_usedwhere_list = real_usword_usedwhere_JSON2List(usword_usedwhere)
 	
 # # 	# return jsonify(data=state_words_list)
-# 	# WORD_CSV = jsonify(usword_usedwhere_list)
 
+@app.route('/worduseentity.json')
+def worduseentity():
+	"""
+	Return the frequency of a queried word, in state legislators
 
-# 	# federal_words_dict = {}
-#  #    federal_words_list = []
+	"""
+	# Accept argument data from legislator event listener function
+	wordrequest = request.args.get('phrase')
 
-#  #    for state_count in us_topwords_usedwhere:
-#  #        # import pdb; pdb.set_trace()
-#  #        federal_words_dict[int(state_count["count"])] = str(state_count["state"])
-
-#  #    for key in state_words_dict:
-#  #        mini_state_words = {}
-#  #        key_count = federal_words_dict[key]
-#  #        mini_federal_words[key] = key_count
-#  #        federal_words_list.append(mini_state_words)
-#  #        # instead of making mini_dict be {634: 'congress'}
-#  #        # structure mini_dict like this:  {'state':'MO', 'count': 634}
-        
-#  #    # print state_words_dict
-#  #    return usword_usedwhere_list
-
-
-# 	# Convert JSON to csv file
-# # with open('mycsvfile.csv','wb') as f:
-# #     w = csv.writer(f)
-# #     w.writerows(WORD_CSV.items())
-#     # w = csv.writer(sys.stderr)
-
-# 	# Pass returned details to Jinja
-# 	return render_template("home.html/#topwords",
-# 							us_topwords_usedwhere=us_topwords_usedwhere,
-# 							word=word)
-
-
-
-# @app.route('/statewords', methods=['POST'])
-# # Routes details from sunlight api to jinja template
-# def topwords_per_state():
-# 	""" Returns the most used words per state """
-
-# 	# Access key for Sunlight API
-# 	sunlight.config.KEY_ENVVAR = 'SUNLIGHT_API_KEY'
+	# Access key for Sunlight API
+	sunlight.config.KEY_ENVVAR = 'SUNLIGHT_API_KEY'
 	
-# 	# Get form variables from home.html user input
-# 	state = request.form["state"]
-# 	# Send query to sunlight requesting words data
-# 	topwords_per_state = sunlight.capitolwords.phrases(entity_type='state', entity_value=state, per_page=10)
+	# Get form variables from home.html user input
+	# Send query to sunlight requesting words data
+	topwords_per_leg = sunlight.capitolwords.phrases(entity_type='state', entity_value='phrase', per_page=50)
+	list_of_tuples = []
 
-# 	# Convert JSON into dictionary, then call next function
-# 	# from model.py: topwords_per_state_JSON2List(topwords_per_state)
-# 	topwords_per_state_list = topwords_per_state_JSON2List(topwords_per_state)
-	
-# 	# # Convert JSON to csv file
-# 	# with open('mycsvfile.csv','wb') as f:
-# 	#     # w = csv.writer(sys.stderr)
-# 	#     w = csv.writer(f)
-# 	#     w.writerows(my_dict.items())
+	for count_dict in word_request:
+		# Make a tuple to pass back to legislator words container
+		size = count_dict['count']
+		text = count_dict['ngram']
+		cw_tuple = (size, text)
+		list_of_tuples.append(cw_tuple)
 
-# 	# Pass returned details to Jinja
-# 	return render_template("home.html/#statewords",
-# 							topwords_per_state=topwords_per_state,
-# 							state=state)
+	# Put words in order by frequency
+	list_of_tuples.sort()
+	# Sort descending
+	list_of_tuples.reverse()
+	# Jsonify list of tuples for use and pass back to container
+	return jsonify({'legwords':list_of_tuples})
 
-
-################### Helper functions ##########################
+################### Helper Functions ##########################
 
 # Listening or requests
 if __name__ == "__main__":
