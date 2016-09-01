@@ -8,6 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Hackbright Project">
     <meta name="author" content="Lora Rose">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+
     <title>Hackbright Project</title>
     
     <!-- Bootstrap Core CSS -->
@@ -42,11 +45,9 @@
         <!-- Collect the nav links, etc for toggling -->
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#home">Home</a></li>
-                <li><a href="#representatives">Representatives</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#about"><span class="glyphicon glyphicon-user"></span> About</a></li>
+                <li><a href="/#"> Home </a></li>
+                <li><a href="/#representatives"> Representatives </a></li>
+                <li><a href="/#about"> About</a></li>
             </ul>
         </div>
     </div>
@@ -78,14 +79,17 @@
                 .append("svg:svg")
                 .attr("width", w)
                 .attr("height", h);
+            
             // Accept state param from state path click
-            function getstate(state) {
+            function getstate(state) { 
                 var params = {
                     'state': state
                 };
                 // Pass to server route for access to API and return with response to showTopWords function
                 $.get('/getstatewords.json', params, showTopWords);
+                // debugger;
             }
+            
             // Accept response from API via server
             function showTopWords(resp) {
                 console.log(resp);
@@ -99,12 +103,10 @@
                         var ngram = topWord[1];
                         var countNgram = "<br>" + ngram;
                         $('#topwordscontainer').append(countNgram);
-                }
-                // Upon function call, show elements:
-                $('#popwords-divider').show();
-                $('#popwords-featurette').show();
+                    }
                 }
             }
+            
             // This code generate paths without mapping to other data
             // Load JSON file and generate path for each state
             d3.json("/statejson", function(json) { // file path, callback function called when data loaded
@@ -113,9 +115,10 @@
                     .enter() // create placeholder to reference the new elements
                     .append("path") // add to the DOM!
                     .attr("d", path) // generate paths for each state
-                    .style("fill", "steelblue")
+                    .style("fill", "#625076")
                     // Click on state kicks off State Words API call
                     .on("click", function(d) {
+                        console.log('map clicked');
                         getstate(d.state);
                     });
             });
@@ -127,7 +130,7 @@
         <div class="row">
             <div class="col-sm-3">
                 <p></p>
-                <h1>.</h1>
+                <h1> </h1>
                 <!-- Show top state words upon state click -->
                 <p id="topwordscontainer"></p>
             </div>
@@ -138,6 +141,7 @@
 {% endblock map %}
 
 <!-- ################## Find Reps #################### -->
+
 
     <hr class="featurette-divider" id="representatives">
     <div class="featurette" id="repdetails">
@@ -235,19 +239,179 @@
 <!-- ################## Rep Details #################### -->
 
     {% if city %}
+    {% if scroll %}
+    <script>
+        document.getElementById('{{ scroll }}').scrollIntoView();
+    </script>
+    {% endif %}
     <hr class="featurette-divider">
-        <p class="lead">
-        <div class="container">
+    <p class="lead">
+        <div class="container" id="repdetails_container">
             <center>
             <h1 class="featurette-heading">Representative
             <span class="text-muted">Details for</span>
-            <br>{{ city }} and {{ state }}</h1>
-            </center>
+            <br>{{ city }}, {{ state }}</h1></center>
             <br></br>
+
+<!-- ################ State Legislators ################ -->
+
+            <!-- Sunlight Open States API data  -->
+            <div class="row">
+                <!-- <center>
+                <h2>Local</h2>
+                </center><p></p> -->
+                {% for key in leg_details_openstates %}
+                <div class="col-sm-4">
+                    <!-- USERPIC -->
+                    <div class="rep-image">
+                        <center>
+                        <figure><img class="rep-image img-circle img-responsive" id="rep-image" width="225" height="275" src="{{ key['photo_url'] }}"></figure>
+                        </center>
+                    </div>
+                    <p></p>
+                    <!-- USER TITLE -->
+                    <div class="profile-usertitle">
+                        <center>
+                        <div class="profile-usertitle-name">
+                            {{ key['full_name'] }}
+                        </div>
+                        <p></p>
+                        <div class="profile-usertitle-details">
+                            {% if key['chamber'] == 'upper' %} Senate | District: {{ key['district'] }} {% else %} Congress | District: {{ key['district'] }} {% endif %}
+                        </div>
+                        </center>
+                    </div>
+                    <!-- LABELS -->
+                    <div class="profile-userlabels">
+                        <center><h3>
+                            {% if (key['party'] == 'Democrat') or (key['party'] == 'Democratic') %}
+                                <span class="label label-primary">
+                                Democrat</span>
+                                {% elif key['party'] == 'Republican' %}
+                                <span class="label label-danger">Republican</span>
+                            {% elif key['party'] == 'Independent' %}
+                                <span class="label label-info">Independent</span>
+                            {% else %}
+                                <span class="label label-success">Green</span>
+                            {% endif %}
+                        </h3></center>
+                    </div>
+                    <!-- MENU -->
+                    <div class="profile-usermenu">
+                        <center>
+                        <ul class="nav">
+                            <li class="active">
+                                <a href="{{ key['url'] }}">
+                                <i class="glyphicon glyphicon-home"></i>
+                                Website </a>
+                            </li>
+                            <li>
+                                <a href="tel://{{ key['offices'][0]['phone'] }}">
+                                <i class="glyphicon glyphicon-phone-alt"></i> {{ key['offices'][0]['phone'] }} </a>
+                            </li>
+                        </ul>
+                        </center>
+                    </div>
+                    <div class="col-sm-1"></div>
+                </div>
+                {% endfor %}
+            </div>
+ <hr class="featurette-divider" id="statewords">
+
+<!-- ############## Federal Legislators ################ -->
+
+            <!-- Sunlight Congress API data  -->
+            <div class="row">
+               <!--  <center>
+                <h2>State</h2>
+                </center><p></p> -->
+                {% for key in leg_details_congress %}
+                <div class="col-sm-4">
+                    <!-- USERPIC -->
+                    <div class="rep-image">
+                        <center>
+                        <figure id="rep-image">
+                            <img class="img-circle img-responsive" id="rep-image" width="225" height="275" src="https://theunitedstates.io/images/congress/225x275/{{ key['bioguide_id'] }}.jpg"></figure>
+                        </center>
+                    </div>
+                    <p></p>
+                    <!-- USER TITLE -->
+                    <div class="profile-usertitle">
+                        <center>
+                        <div class="profile-usertitle-name">
+                            {{ key['first_name'] }} {{ key['last_name'] }}
+                        </div>
+                        <p></p>
+                        <div class="profile-usertitle-details">
+                            {% if key['chamber'] == 'house' %} {{ key['chamber'].capitalize() }} | District: {{ key['district'] }} {% else %} {{ key['chamber'].capitalize() }} {% endif %}
+                        </div>
+                        </center>
+                    </div>
+                    <!-- LABELS -->
+                    <div class="profile-userlabels">
+                        <center><h3>
+                            {% if key['party'] == 'D' %}
+                                <span class="label label-primary">
+                                Democrat</span>
+                                {% elif key['party'] == 'R' %}
+                                <span class="label label-danger">Republican</span>
+                            {% elif key['party'] == 'I' %}
+                                <span class="label label-info">Independent</span>
+                            {% else %}
+                                <span class="label label-success">Green</span>
+                            {% endif %}
+                        </h3></center>
+                    </div>
+                    <!-- MENU -->
+                    <div class="profile-usermenu">
+                        <center><p></p>
+                        <ul class="nav">
+                            <li>
+                                <!-- Button that queries Word Cloud -->
+                                <input type="button" value="My Words" class="mywords" id="{{ key['bioguide_id'] }}">
+                            </li>
+                            <li class="active">
+                                <a href="{{ key['website'] }}">
+                                <i class="glyphicon glyphicon-home"></i> Website </a>
+                            </li>
+                            <li>
+                                <a href="tel://1-{{ key['phone'] }}">
+                                <i class="glyphicon glyphicon-phone-alt"></i> {{ key['phone'] }}</a>
+                            </li>
+                            <li>
+                                <a href="mailto://{{ key['contact_form'] }}" target="_blank">
+                                <i class="glyphicon glyphicon-envelope"></i> Email </a>
+                            </li>
+                            <li>
+                                {% if key['facebook_id'] != 'Null' %}
+                                    <a href="http://facebook.com/{{ key['facebook_id'] }}">
+                                        <i class="glyphicon glyphicon-thumbs-up"></i>
+                                    Facebook </a>
+                                {% else %}
+                                {% endif %}
+                            </li>
+                            <!-- TWITTER -->
+                            <li>
+                                <div class="rep-tweets">
+                                    <a class="twitter-timeline" data-height="500" href="https://twitter.com/{{ key['twitter_id'] }}">Tweets by {{ key['first_name'] }} {{ key['last_name'] }}</a>
+                                    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                                </div>
+                            </li>
+                        </ul>
+                        </center>
+                    </div>
+                    <div class="col-sm-1"></div>
+                </div>
+                {% endfor %}
+            </div>
+            <hr class="featurette-divider" id="statewords">
 
 <!-- ################ Pres / Vice / FLOTUS ################ -->
 
             <div class="row">
+                <!-- <center>
+                <h2>Federal</h2>
+                </center><p></p> -->
                 <!-- President -->
                 <!-- USERPIC -->
                 <div class="col-sm-4">
@@ -435,162 +599,6 @@
                     </div>
                 </div>
             </div>
-            <hr class="featurette-divider" id="statewords">
-
-<!-- ############## Federal Legislators ################ -->
-
-            <!-- Sunlight Congress API data  -->
-            <div class="row">
-                {% for key in leg_details_congress %}
-                <div class="col-sm-4">
-                    <!-- USERPIC -->
-                    <div class="rep-image">
-                        <center>
-                        <figure id="rep-image">
-                            <img class="img-circle img-responsive" id="rep-image" width="225" height="275" src="https://theunitedstates.io/images/congress/225x275/{{ key['bioguide_id'] }}.jpg"></figure>
-                        </center>
-                    </div>
-                    <p></p>
-                    <!-- USER TITLE -->
-                    <div class="profile-usertitle">
-                        <center>
-                        <div class="profile-usertitle-name">
-                            {{ key['first_name'] }} {{ key['last_name'] }}
-                        </div>
-                        <p></p>
-                        <div class="profile-usertitle-details">
-                            {% if key['chamber'] == 'house' %} {{ key['chamber'].capitalize() }} | District: {{ key['district'] }} {% else %} {{ key['chamber'].capitalize() }} {% endif %}
-                        </div>
-                        </center>
-                    </div>
-                    <!-- LABELS -->
-                    <div class="profile-userlabels">
-                        <center><h3>
-                            {% if key['party'] == 'D' %}
-                                <span class="label label-primary">
-                                Democrat</span>
-                                {% elif key['party'] == 'R' %}
-                                <span class="label label-danger">Republican</span>
-                            {% elif key['party'] == 'I' %}
-                                <span class="label label-info">Independent</span>
-                            {% else %}
-                                <span class="label label-success">Green</span>
-                            {% endif %}
-                        </h3></center>
-                    </div>
-                    <!-- MENU -->
-                    <div class="profile-usermenu">
-                        <center>
-                        <ul class="nav">
-                            <li class="active">
-                                <a href="{{ key['website'] }}">
-                                <i class="glyphicon glyphicon-home"></i> Website </a>
-                            </li>
-                            <li>
-                                <a href="tel://1-{{ key['phone'] }}">
-                                <i class="glyphicon glyphicon-phone-alt"></i> {{ key['phone'] }}</a>
-                            </li>
-                            <li>
-                                <a href="mailto://{{ key['contact_form'] }}" target="_blank">
-                                <i class="glyphicon glyphicon-envelope"></i> Email </a>
-                            </li>
-                            <li>
-                                {% if key['facebook_id'] != 'Null' %}
-                                    <a href="http://facebook.com/{{ key['facebook_id'] }}">
-                                        <i class="glyphicon glyphicon-thumbs-up"></i>
-                                    Facebook </a>
-                                {% else %}
-                                {% endif %}
-                            </li>
-                            <li>
-                                {% if key['youtube_id'] != 'Null' %}
-                                    <a href="http://youtube.com/{{ key['youtube_id'] }}">
-                                        <i class="glyphicon glyphicon-expand"></i>
-                                    Youtube </a>
-                                {% else %}
-                                {% endif %}
-                            </li>
-                            <!-- TWITTER -->
-                            <li>
-                                <div class="rep-tweets">
-                                    <a class="twitter-timeline" data-height="500" href="https://twitter.com/{{ key['twitter_id'] }}">Tweets by {{ key['first_name'] }} {{ key['last_name'] }}</a>
-                                    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-                                </div>
-                            </li>
-                            <li>
-                                <!-- Button that queries Word Cloud -->
-                                
-                                <input type="button" value="My Words" class="mywords" id="{{ key['bioguide_id'] }}" />
-                            </li>
-                        </ul>
-                        </center>
-                    </div>
-                    <div class="col-sm-1"></div>
-                </div>
-                {% endfor %}
-            </div>
-            <hr class="featurette-divider" id="statewords">
-
-<!-- ################ State Legislators ################ -->
-
-            <!-- Sunlight Open States API data  -->
-            <div class="row">
-                {% for key in leg_details_openstates %}
-                <div class="col-sm-4">
-                    <!-- USERPIC -->
-                    <div class="rep-image">
-                        <center>
-                        <figure><img class="rep-image img-circle img-responsive" id="rep-image" width="225" height="275" src="{{ key['photo_url'] }}"></figure>
-                        </center>
-                    </div>
-                    <p></p>
-                    <!-- USER TITLE -->
-                    <div class="profile-usertitle">
-                        <center>
-                        <div class="profile-usertitle-name">
-                            {{ key['full_name'] }}
-                        </div>
-                        <p></p>
-                        <div class="profile-usertitle-details">
-                            {% if key['chamber'] == 'upper' %} Senate | District: {{ key['district'] }} {% else %} Congress | District: {{ key['district'] }} {% endif %}
-                        </div>
-                        </center>
-                    </div>
-                    <!-- LABELS -->
-                    <div class="profile-userlabels">
-                        <center><h3>
-                            {% if (key['party'] == 'Democrat') or (key['party'] == 'Democratic') %}
-                                <span class="label label-primary">
-                                Democrat</span>
-                                {% elif key['party'] == 'Republican' %}
-                                <span class="label label-danger">Republican</span>
-                            {% elif key['party'] == 'Independent' %}
-                                <span class="label label-info">Independent</span>
-                            {% else %}
-                                <span class="label label-success">Green</span>
-                            {% endif %}
-                        </h3></center>
-                    </div>
-                    <!-- MENU -->
-                    <div class="profile-usermenu">
-                        <center>
-                        <ul class="nav">
-                            <li class="active">
-                                <a href="{{ key['url'] }}">
-                                <i class="glyphicon glyphicon-home"></i>
-                                Website </a>
-                            </li>
-                            <li>
-                                <a href="tel://{{ key['offices'][0]['phone'] }}">
-                                <i class="glyphicon glyphicon-phone-alt"></i> {{ key['offices'][0]['phone'] }} </a>
-                            </li>
-                        </ul>
-                        </center>
-                    </div>
-                    <div class="col-sm-1"></div>
-                </div>
-                {% endfor %}
-            </div>
         </p>
         </div>
     {% endif %}
@@ -603,17 +611,7 @@
         <p class="lead">
         <div class="container">
             <div class="row">
-                <div class="col-sm-1">
-                    <center>
-                        <h2 class="featurette-heading">Most Popular Words<br><span class="text-muted">Used by Congress</span></h2>
-                    </center>
-                    <p></p>
-                </div>
-                    <div class="col-sm-8" id="toplegwordscontainer">
-                    </div>
-                <div class="col-sm-3">
-                    <img class="featurette-image img-circle img-responsive pull-right" src="http://placehold.it/500x500">
-                </div>
+                <div class="col-sm-8" id="toplegwordscontainer"></div>
             </div>
         </div>
         </p>
@@ -625,14 +623,15 @@
     <script src="/static/js/d3.layout.cloud.js"></script>
     
     <script>
-        var width = 750;
-        var height = 500;
+        var svg_location = "#toplegwordscontainer";
+        var width = $(document).width();
+        var height = $(document).height();
+
         var fill = d3.scale.category20b();
 
         $(document).ready(function(){
             $(".mywords").click(function getleg() {
                 var id = this.id;
-                console.log(id);
                 var params = {
                     'bioguide_id': id
                 };
@@ -640,51 +639,49 @@
             });
 
             function showLegWords(resp) {
-                console.log(resp);
                 var listOfLegWords = resp.legwords;
-                $('#toplegwordscontainer').html("");
-                if (listOfLegWords.length > 0) {
-                    for (var i = 0; i < listOfLegWords.length; i++) {
-                        var topWord = listOfLegWords[i];
-                        var size = topWord[0];
-                        var text = topWord[1];
-                        var textSize = text, size;
-                        $('#toplegwordscontainer').append(text, size);
-                    }
+                makeWordCloud(listOfLegWords);
                     $('#toplegwords-divider').show();
                     $('#toplegwords-featurette').show();
-                }
             }
         })
+        function makeWordCloud(words){
+            // d3.layout.cloud().size([width, height])
+            d3.layout.cloud().size([width, height])
+              // .words(['meggie', 'ro'].map(function(d) {
+              //   return {text: d, size: 10 + Math.random() * 90};
+              // }))
+              .words(words.map(function(d) {
+                return {text: d[1], size:  Number(d[0])};
+              }))
+              .rotate(function() { return ~~(Math.random() * 2) * 90; })
+              .font("Special Elite")
+              .fontSize(function(d) { return d.size; })
+              .on("end", draw)
+              .start();
 
-        // deleted textSize
-        d3.layout.cloud().size([width, height])
-            .padding(5)
-            .rotate(function() { return ~~(Math.random() * 2) * 90; })
-            .font("Impact")
-            .fontSize(function(d) { return d.size; })
-            .on("end", draw)
-            .start();       
-
-        function draw(words) {
-            d3.select("body").append("svg")
-            .attr("width", width)
-            .attr("height", height)
-            .append("g")
-            .attr("transform", "translate("+(width/2)+","+(height/2)+")")
-            .selectAll("text")
-            .data(words)
-            .enter().append("text")
-            .style("font-size", function(d) { return d.size + "px"; })
-            .style("font-family", "Impact")
-            .style("fill", function(d, i) { return fill(i); })
-            .attr("text-anchor", "middle")
-            .attr("transform", function(d) {
-                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-            })
-            .text(function(d) { return d.text; });   
+            function draw(words) {
+            d3.select(svg_location).append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .append("g")
+                .attr("transform", "translate(" + [width >> 1, height >> 1] + ")")
+                .selectAll("text")
+                .data(words)
+                .enter().append("text")
+                .style("font-size", function(d) { return d.size + "px"; })
+                .style("font-family", "Special Elite")
+                .style("fill", function(d, i) { return fill(i); })
+                .attr("text-anchor", "middle")
+                .attr("transform", function(d) {
+                  return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                })
+                .text(function(d) { return d.text; });
+            }
+        d3.layout.cloud().stop();
         }
     </script>
+
 {% endblock wordcloud %}
 
 <!-- ################## About #################### -->
@@ -694,15 +691,18 @@
         <p class="lead">
         <div class="container">
             <div class="row">
-                <div class="col-sm-12">
-                    <h2 class="featurette-heading">About All The Things
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10">
+                    <h2 class="featurette-heading">Who Represents You
                     </h2>
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                    <p></p>
+                    <p>Peek behind the curtain and get to know your representatives. Do their social media rants line up with their focus at the state level or on the hill? Assess their platform and hold them to their word by visualizing and considering the words they use each day while in session. Check out the most popular words spoken by legislators of a chosen state, gaining insight into the way in which lawmakers shape and are shaped by their constituents. Users can search for contact information and social details of their federal, state, and local representatives.</p>
+                    <p><h3><span class="label label-warning">Tech Stack:</span></h3><br>Python, Flask, Javascript, SQL, JQuery, AJAX, D3,  Jinja, Bootstrap</p>
+                    <p><h3><span class="label label-warning">APIs Used:</span></h3><br>Googlemaps, Sunlight Congress, Capitol Words, Open States, Twitter</p>
+                    <p><h3><span class="label label-warning">Github Repository:</span></h3><br><a href:"https://github.com/aroseartist/HbProject">https://github.com/aroseartist/HbProject</a></p>
                     <div class="text-center">
                         <h3>Let's Connect! </h3>
                         <br>
-                        <a href="http://www.aroseartist.com" class="btn btn-social-icon btn-website"><i class="fa fa-location-arrow"></i></a>
+                        <a href="http://www.aroseartist.com" class="btn btn-social-icon btn-website"><i class="fa fa-home"></i></a>
                         <a href="https://github.com/aroseartist/" class="btn btn-social-icon btn-github"><i class="fa fa-github"></i></a>
                         <a href="https://plus.google.com/+AroseartistLora/posts" class="btn btn-social-icon btn-google-plus"><i class="fa fa-google-plus"></i></a>
                         <a href="https://www.instagram.com/aroseartist/" class="btn btn-social-icon btn-instagram"><i class="fa fa-instagram"></i></a>
@@ -710,6 +710,7 @@
                         <a href="http://twitter.com/ARoseArtist" class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"></i></a>
                     </div>
                 </div>
+                <div class="col-sm-1"></div>
             </div>
         </div>
         </p>
@@ -721,7 +722,7 @@
         <hr class="featurette-divider" id="footer">
         <div class="row">
             <div class="col-lg-12" id='toplegwordscontainer'>
-                <p><center>Copyright by <a href="http://www.aroseartist.com/">Lora Rose</a> ©2016</center></p>
+                <p><center>Copyright 2016 - <a href="http://www.aroseartist.com/">Lora Rose</a></center></p>
             </div>
         </div>
     </footer>

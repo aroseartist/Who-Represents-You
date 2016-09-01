@@ -31,12 +31,6 @@ path:hover {
     fill-opacity: .7;
 }
 
-/* Sizing representative images */
-img.rep-image {
-    max-width: 50%;
-    max-height: 50%;
-}
-
 .node {
     stroke: #fff;
     stroke-width: 1.5px;
@@ -46,12 +40,6 @@ img.rep-image {
       fill: none;
       stroke: #bbb;
 }
-
-/*
-#rep-image {
-    max-width: 225px;
-    max-height: 275px;
-}*/
 
 .tooltip {
     font-family: "Special Elite", serif;
@@ -84,7 +72,7 @@ img.rep-image {
 #topwordscontainer{
     font-size: 35px;
     font-variant: small-caps;
-    color: red;
+    color: #625076;
     vertical-align: 40px;
     text-align: center;
     word-spacing: 20px;
@@ -105,6 +93,11 @@ img.rep-image {
 
 .featurette-heading {
     font-size: 50px;
+}
+
+.label-warning {
+  background-color: #625076;
+  color: #fff;
 }
 
 footer {
@@ -233,9 +226,6 @@ footer {
 .btn-twitter:active,.btn-twitter.active,.open .dropdown-toggle.btn-twitter{background-image:none}
 .btn-twitter.disabled,.btn-twitter[disabled],fieldset[disabled] .btn-twitter,.btn-twitter.disabled:hover,.btn-twitter[disabled]:hover,fieldset[disabled] .btn-twitter:hover,.btn-twitter.disabled:focus,.btn-twitter[disabled]:focus,fieldset[disabled] .btn-twitter:focus,.btn-twitter.disabled:active,.btn-twitter[disabled]:active,fieldset[disabled] .btn-twitter:active,.btn-twitter.disabled.active,.btn-twitter[disabled].active,fieldset[disabled] .btn-twitter.active{background-color:#55acee;border-color:rgba(0,0,0,0.2)}
 
-.btn-website{color:#fff;background-color:#A45193;border-color:rgba(0,0,0,0.2)}.btn-website:hover,.btn-website:focus,.btn-website:active,.btn-website.active,.open .dropdown-toggle.btn-website{color:#fff;background-color:#A45193;border-color:rgba(0,0,0,0.2)}
+.btn-website{color:#fff;background-color:#625076;border-color:rgba(0,0,0,0.2)}.btn-website:hover,.btn-website:focus,.btn-website:active,.btn-website.active,.open .dropdown-toggle.btn-website{color:#fff;background-color:#625076;border-color:rgba(0,0,0,0.2)}
 .btn-website:active,.btn-website.active,.open .dropdown-toggle.btn-website{background-image:none}
-.btn-website.disabled,.btn-website[disabled],fieldset[disabled] .btn-website,.btn-website.disabled:hover,.btn-website[disabled]:hover,fieldset[disabled] .btn-website:hover,.btn-website.disabled:focus,.btn-website[disabled]:focus,fieldset[disabled] .btn-website:focus,.btn-website.disabled:active,.btn-website[disabled]:active,fieldset[disabled] .btn-website:active,.btn-website.disabled.active,.btn-website[disabled].active,fieldset[disabled] .btn-website.active{background-color:#A45193;border-color:rgba(0,0,0,0.2)}
-
-
-
+.btn-website.disabled,.btn-website[disabled],fieldset[disabled] .btn-website,.btn-website.disabled:hover,.btn-website[disabled]:hover,fieldset[disabled] .btn-website:hover,.btn-website.disabled:focus,.btn-website[disabled]:focus,fieldset[disabled] .btn-website:focus,.btn-website.disabled:active,.btn-website[disabled]:active,fieldset[disabled] .btn-website:active,.btn-website.disabled.active,.btn-website[disabled].active,fieldset[disabled] .btn-website.active{background-color:#625076;border-color:rgba(0,0,0,0.2)}
