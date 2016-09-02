@@ -11,7 +11,7 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="/static/img/favicon.ico">
 
-    <title>Hackbright Project</title>
+    <title>Who Represents You</title>
     
     <!-- Bootstrap Core CSS -->
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
@@ -239,11 +239,6 @@
 <!-- ################## Rep Details #################### -->
 
     {% if city %}
-    {% if scroll %}
-    <script>
-        document.getElementById('{{ scroll }}').scrollIntoView();
-    </script>
-    {% endif %}
     <hr class="featurette-divider">
     <p class="lead">
         <div class="container" id="repdetails_container">
@@ -645,20 +640,31 @@
                     $('#toplegwords-featurette').show();
             }
         })
+
         function makeWordCloud(words){
-            // d3.layout.cloud().size([width, height])
+            var allSizes = [];
+                for (var i = 0; i < words.length; i++) {
+                    var currentWord = words[i];
+                    allSizes.push(currentWord[0]);
+                };
+            console.log(allSizes);
+            var max = Math.max.apply(null, allSizes);
+            var min = Math.min.apply(null, allSizes);
+            var roScale = d3.scale.linear()
+                            .domain([min, max])
+                            .range([15, 100]);
+        
             d3.layout.cloud().size([width, height])
-              // .words(['meggie', 'ro'].map(function(d) {
-              //   return {text: d, size: 10 + Math.random() * 90};
-              // }))
-              .words(words.map(function(d) {
+                .words(words.map(function(d) {
                 return {text: d[1], size:  Number(d[0])};
-              }))
-              .rotate(function() { return ~~(Math.random() * 2) * 90; })
-              .font("Special Elite")
-              .fontSize(function(d) { return d.size; })
-              .on("end", draw)
-              .start();
+                }))
+                .rotate(function() { return ~~(Math.random() * 2) * 90; })
+                .font("Special Elite")
+                .fontSize(function(d) { return roScale(d.size); })
+                .on("end", draw)
+                // .spiral("archimedean") find out about this!!!!
+                .padding(1)
+                .start();
 
             function draw(words) {
             d3.select(svg_location).append("svg")

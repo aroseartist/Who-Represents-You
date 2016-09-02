@@ -5,16 +5,12 @@
 .Trashes
 *.pyc
 
-holding_tank/
-playground.py
-seed_data/
+data/
 
 python-sunlight/
 .vagrant/
 env/
-venv/
-/env
-/venv
+.env/
 
 secrets.sh
 api.py

@@ -67,7 +67,6 @@ def gather_sunlight_congress():
 
     Find members of Congress from Sunlight via lat lng
     """
-    id = request.args.get('repdetails_container')
     # Access key for Googlemaps API
     gmaps = googlemaps.Client(key=os.environ['GEOLOCATE_GOOGLE_API'])
     # Access key for Sunlight API
@@ -89,7 +88,7 @@ def gather_sunlight_congress():
     leg_details_openstates = sunlight.openstates.legislator_geo_search(latlng[0], latlng[1])
 
     # Pass returned JSON details to Jinja
-    return render_template("home.html", scroll="repdetails_container",
+    return render_template("home.html",
                             leg_details_congress=leg_details_congress,
                             leg_details_openstates=leg_details_openstates,
                             state=state,
@@ -138,14 +137,12 @@ def getlegwords():
     """
     # Accept argument data from legislator event listener function
     clickedleg = request.args.get('bioguide_id')
-    print clickedleg + "CLICKED!!!"
     # Access key for Sunlight API
     sunlight.config.KEY_ENVVAR = 'SUNLIGHT_API_KEY'
     
     # Get form variables from home.html user input
     # Send query to sunlight requesting words data
     topwords_per_leg = sunlight.capitolwords.phrases(entity_type='legislator', entity_value=clickedleg)
-    print topwords_per_leg
     tuple_of_words = []
 
     for count_dict in topwords_per_leg:
@@ -157,7 +154,6 @@ def getlegwords():
 
     # Put words in order by frequency
     tuple_of_words.sort()
-    print tuple_of_words
     # Sort descending
     tuple_of_words.reverse()
     # Jsonify list of tuples for use and pass back to container
@@ -170,9 +166,10 @@ if __name__ == "__main__":
 
     
     # Set debug=True in order to invoke the DebugToolbarExtension
-    app.debug = True
+    # app.debug = True
 
     # app.config['TRAP_HTTP_EXCEPTIONS'] = True
+    
     # Use of debug toolbar
     # DebugToolbarExtension(app)
    

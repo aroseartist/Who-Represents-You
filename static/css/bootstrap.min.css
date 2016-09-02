@@ -166,23 +166,6 @@ textarea {
     overflow: auto
 }
 /*
-optgroup {
-    font-weight: 700
-}
-
-table {
-    border-spacing: 0;
-    border-collapse: collapse
-}
-
-td,
-th {
-    padding: 0
-}*/
-
-
-/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
-
 @media print {
     *,
     :after,
@@ -254,7 +237,7 @@ th {
     .table-bordered th {
         border: 1px solid #ddd!important
     }
-}
+}*/
 
 @font-face {
     font-family: 'Glyphicons Halflings';
