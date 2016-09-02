@@ -3,12 +3,15 @@
  * Copyright 2013-2016 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
+
+ /* Import google font */
 @import url(http://fonts.googleapis.com/css?family=Special+Elite);
-@import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
 
 body {
+    font-family: "Special Elite", serif;
+    margin: 0;
     background-color: white;
-    margin-top: 50px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    /*margin-top: 50px;  Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
 html {
@@ -21,53 +24,26 @@ div {
     font-family: "Special Elite", serif;
 }
 
-body {
-    font-family: "Special Elite", serif;
-    margin: 0
+
+
+@import url(http://fonts.googleapis.com/css?family=Kalam:700,400);
+
+/* Style for Custom Tooltip */
+div.tooltip {   
+    position: absolute;           
+    text-align: center;           
+    width: 60px;                  
+    height: 28px;                 
+    padding: 2px;             
+    font: 12px sans-serif;        
+    background: white;   
+    border: 0px;      
+    border-radius: 8px;           
+    pointer-events: none;         
 }
 
-/* On mouse hover, lighten state color */   
-path:hover {
-    fill-opacity: .7;
-}
 
-.node {
-    stroke: #fff;
-    stroke-width: 1.5px;
-}
 
-.link {
-      fill: none;
-      stroke: #bbb;
-}
-
-.tooltip {
-    font-family: "Special Elite", serif;
-}
-
-.profile-usertitle-name {
-    font-size: 30px;
-}
-
-.profile-usertitle-details {
-    font-size: 15px;
-}
-
-.headline {
-    padding: 120px 0;
-}
-
-.headline h1 {
-    font-size: 130px;
-    /*background: #fff;*/
-    background: rgba(255,255,255,0.9);
-}
-
-.headline h2 {
-    font-size: 77px;
-    /*background: #fff;*/
-    background: rgba(255,255,255,0.9);
-}
 
 #topwordscontainer{
     font-size: 35px;
@@ -83,110 +59,172 @@ path:hover {
     max-height: 275px;
 }
 
-.featurette-divider {
-    margin: 80px 0;
-}
-
-.featurette {
-    overflow: hidden;
-}
-
-.featurette-heading {
-    font-size: 50px;
-}
-
 .label-warning {
   background-color: #625076;
   color: #fff;
 }
 
-footer {
-    margin: 5px 0;
+
+/* Links */
+a {
+    background-color: transparent }
+a:active,
+a:hover {
+    outline: 0 }
+.link {
+      fill: none;
+      stroke: #bbb }
+
+/* Featurette */
+.featurette-divider {
+    margin: 80px 0;
+}
+.featurette {
+    overflow: hidden;
+}
+.featurette-heading {
+    font-size: 50px;
 }
 
+/* D3 map */
+/* On mouse hover, lighten state color */   
+path:hover {
+    fill-opacity: .7;
+}
+.node {
+    stroke: #fff;
+    stroke-width: 1.5px;
+}
+
+/* Profile */
+.profile-usertitle-name {
+    font-size: 30px;
+}
+.profile-usertitle-details {
+    font-size: 15px;
+}
+
+/* Text */
+.headline {
+    padding: 120px 0;
+}
+.headline h1 {
+    font-size: 130px;
+    background: rgba(255,255,255,0.9);
+}
+.headline h2 {
+    font-size: 77px;
+    background: rgba(255,255,255,0.9);
+}
+
+/* Footer */
+footer.footer {
+    max-width: 100%;
+    background: url(/static/img/background.jpg);
+}
+.panel-footer {
+    padding: 10px 15px;
+    background-color: #000;
+    border-top: 1px solid #ddd;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px
+}
+.footer-divider {
+    margin: 20px 0;
+}
+
+/* Responsive sizing */
 @media(max-width:1200px) {
     .headline h1 {
         font-size: 140px;
     }
-
     .headline h2 {
         font-size: 63px;
     }
-
     .featurette-divider {
         margin: 50px 0;
     }
-
     .featurette-heading {
         font-size: 35px;
     }
 }
-
 @media(max-width:991px) {
     .headline h1 {
         font-size: 105px;
     }
-
     .headline h2 {
         font-size: 50px;
     }
-
     .featurette-divider {
         margin: 40px 0;
     }
-
     .featurette-heading {
         font-size: 30px;
     }
 }
-
 @media(max-width:768px) {
     .container {
         margin: 0 15px;
     }
-
     .featurette-divider {
         margin: 40px 0;
     }
-
     .featurette-heading {
         font-size: 25px;
     }
 }
-
 @media(max-width:668px) {
     .headline h1 {
         font-size: 70px;
     }
-
     .headline h2 {
         font-size: 32px;
     }
-
     .featurette-divider {
         margin: 30px 0;
     }
 }
-
 @media(max-width:640px) {
     .headline {
         padding: 75px 0 25px 0;
     }
-
     .headline h1 {
         font-size: 60px;
     }
-
     .headline h2 {
         font-size: 30px;
     }
 }
-
 @media(max-width:375px) {
     .featurette-divider {
         margin: 10px 0;
     }
 }
+
+/* Glyphicons */
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+.glyphicon-user:before {
+    content: "\e008"}
+.glyphicon-envelope:before {
+    content: "\2709"}
+.glyphicon-expand:before {
+    content: "\e158"}
+.glyphicon-thumbs-up:before {
+    content: "\e125"}
+.glyphicon-phone-alt:before {
+    content: "\e183"}
+.glyphicon-home:before {
+    content: "\e021"}
 
 /* Social Media Connect Buttons for About Section */
 .btn-social{position:relative;padding-left:44px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.btn-social :first-child{position:absolute;left:0;top:0;bottom:0;width:32px;line-height:34px;font-size:1.6em;text-align:center;border-right:1px solid rgba(0,0,0,0.2)}
