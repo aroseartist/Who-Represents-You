@@ -266,9 +266,6 @@
 
             <!-- Sunlight Open States API data  -->
             <div class="row">
-                <!-- <center>
-                <h2>Local</h2>
-                </center><p></p> -->
                 {% for key in leg_details_openstates %}
                 <div class="col-sm-4">
                     <!-- USERPIC -->
@@ -325,15 +322,12 @@
                 </div>
                 {% endfor %}
             </div>
- <hr class="featurette-divider" id="statewords">
+        <hr class="featurette-divider">
 
 <!-- ############## Federal Legislators ################ -->
 
             <!-- Sunlight Congress API data  -->
             <div class="row">
-               <!--  <center>
-                <h2>State</h2>
-                </center><p></p> -->
                 {% for key in leg_details_congress %}
                 <div class="col-sm-4">
                     <!-- USERPIC -->
@@ -378,6 +372,19 @@
                             <li>
                                 <!-- Button that queries Word Cloud -->
                                 <input type="button" value="My Words" class="mywords" id="{{ key['bioguide_id'] }}">
+
+                                <!-- element.scrollIntoView({block: "end", behavior: "smooth"}); -->
+
+
+                <!-- <hr class="featurette-divider" id="toplegwords-divider" hidden>
+                            <div class="featurette" id="toplegwords-featurette" hidden>
+                    <p class="lead">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-8" id="toplegwordscontainer"></div> -->
+
+
+                                <!-- How to scroll to div? -->
                             </li>
                             <li class="active">
                                 <a href="{{ key['website'] }}">
@@ -413,14 +420,11 @@
                 </div>
                 {% endfor %}
             </div>
-            <hr class="featurette-divider" id="statewords">
+        <hr class="featurette-divider" id="statewords">
 
 <!-- ################ Pres / Vice / FLOTUS ################ -->
 
             <div class="row">
-                <!-- <center>
-                <h2>Federal</h2>
-                </center><p></p> -->
                 <!-- President -->
                 <!-- USERPIC -->
                 <div class="col-sm-4">
@@ -615,6 +619,7 @@
 <!-- ############## Word Cloud Container ################ -->
 
 {% block wordcloud %}
+    <!-- On click, show this -->
     <hr class="featurette-divider" id="toplegwords-divider" hidden>
     <div class="featurette" id="toplegwords-featurette" hidden>
         <p class="lead">
@@ -652,6 +657,8 @@
                 makeWordCloud(listOfLegWords);
                     $('#toplegwords-divider').show();
                     $('#toplegwords-featurette').show();
+                    var words = $('#toplegwordscontainer')[0];
+                    words.scrollIntoView();
             }
         })
 
@@ -752,5 +759,18 @@
 <script src="/static/js/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="/static/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+    
+window.onload = function() {
+    if ($('#repdetails_container')[0]) {
+        var reps = $('#repdetails_container')[0];
+        reps.scrollIntoView();
+
+    }
+}
+
+
+</script>
 </body>
 </html>

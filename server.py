@@ -43,6 +43,7 @@ app.jinja_env.undefined = StrictUndefined
 # allows html to reload without restarting server
 app.jinja_env.auto_reload = True
 
+
 ###################### Core Routes ###########################
 
 @app.route('/')
@@ -55,6 +56,7 @@ def index():
 # Routes state coordinates to svg file for D3 map rendering
 def statejsonroot():
     return app.send_static_file('us-states.json')
+
 
 ##################### API Calls ###############################
 
@@ -93,6 +95,7 @@ def gather_sunlight_congress():
                             leg_details_openstates=leg_details_openstates,
                             state=state,
                             city=city)
+
 
 ##################### jQuery / AJAX Calls #############################
 
