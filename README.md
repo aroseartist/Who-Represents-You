@@ -2,7 +2,7 @@
 
 ## Table of Contents
 
-* About
+* 
 * Technologies
 * How to Use
 * Development
@@ -39,23 +39,23 @@ For each state, you can visualize the Congressional Record in relation to each s
 
 Who Represents You - Popular Words by Utah Representatives
 
-![Capitol Words Map](markdown/WRY.map.png "Map")
+![Capitol Words Map](markdown/WRY_map.png "Map")
 
 Enter a city and select a state: view image, party affiliation, and details about each local, state, and federal representative. Visit their website, call their office with a single click, check out to their social media accounts, and interact with their Twitter feed directly from this app.
 
 Who Represents You - Representative Search
 
-![Representative Search](markdown/WRY.repfind.png "Representative Search")
+![Representative Search](markdown/WRY_repfind.png "Representative Search")
 
 Who Represents You - Representative Details
 
-![Representative Details](markdown/WRY.reps.png "Representative Details")
+![Representative Details](markdown/WRY_reps.png "Representative Details")
 
 Click on the button, 'My Words' and find out what each of these state representatives are talking about in Congress and Senate. This gives a visual birds eye view of their commentary and verbal representation. Puruse their Twitter feed to gather a sense of drive and actions that are in relation to these.
 
 Who Represents You - Representative Words
 
-![Representative Words](markdown/WRY.words.png "Representative Words")
+![Representative Words](markdown/WRY_words.png "Representative Words")
 
 ***
 
