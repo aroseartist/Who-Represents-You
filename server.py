@@ -137,7 +137,7 @@ def getlegwords():
     """
     Return most used words by a particular legislator
     """
-    
+
     # Accept argument data from legislator event listener function
     clickedleg = request.args.get('bioguide_id')
     # Access key for Sunlight API
