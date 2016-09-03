@@ -8,6 +8,7 @@ from server import app
 class FlaskRouteTests(TestCase):
     """Flask tests."""
 
+
 ################# Testing Necessities #################
 
     def setUp(self):
@@ -18,6 +19,7 @@ class FlaskRouteTests(TestCase):
 
         # Show Flask errors that happen during tests
         app.config['TESTING'] = True
+
 
 ##################### Test Routes ######################
 
@@ -46,6 +48,7 @@ class FlaskRouteTests(TestCase):
         result = self.client.get("/getlegwords.json")
         self.assertEqual(result.status_code, 200)
 
+
 ################### Test API Return ####################
 
     def test_gather_sunlight_congress(self):
@@ -56,6 +59,7 @@ class FlaskRouteTests(TestCase):
             data={'city':'atlanta', 'state':'GA'},
             follow_redirects=True)
         self.assertIn("Democrat", result.data)
+
 
 
 if __name__ == "__main__":

@@ -103,8 +103,8 @@ def gather_sunlight_congress():
 def getstatewords():
     """
     Return most used words by legislators of clicked state
-
     """
+
     # Accept argument data from D3 map .onclick function
     clickedstate = request.args.get('state')
 
@@ -136,8 +136,8 @@ def getstatewords():
 def getlegwords():
     """
     Return most used words by a particular legislator
-
     """
+    
     # Accept argument data from legislator event listener function
     clickedleg = request.args.get('bioguide_id')
     # Access key for Sunlight API
@@ -161,6 +161,7 @@ def getlegwords():
     tuple_of_words.reverse()
     # Jsonify list of tuples for use and pass back to container
     return jsonify({'legwords':tuple_of_words})
+
 
 ################### Helper Functions ##########################
 
