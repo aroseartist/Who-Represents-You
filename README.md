@@ -4,11 +4,11 @@
 
 * About
 * Technologies
-* [Run Locally](#run)
-* [How to Use](#use)
-* [Implementation](#implement)
-* [Author](#author)
-* [References](#ref)
+* Run Locally
+* How to Use
+* Implementation
+* Author
+* References
 
 ***
 
@@ -33,7 +33,7 @@ Check out the most popular words spoken by legislators of a chosen state, gainin
 
 ***
 
-## [Run Locally](#run)
+## Run Locally
 ###(Flask App)
 
 Create a local directory to work within
