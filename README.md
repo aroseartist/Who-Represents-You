@@ -1,6 +1,6 @@
 # Who Represents You
 
-## [Table of Contents](id:contents)
+## Table of Contents
 
 * About
 * Technologies
