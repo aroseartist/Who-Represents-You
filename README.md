@@ -2,8 +2,8 @@
 
 ## [Table of Contents](id:contents)
 
-* [About](#about)
-* [Technologies](#tech)
+* About
+* Technologies
 * [Run Locally](#run)
 * [How to Use](#use)
 * [Implementation](#implement)
@@ -12,7 +12,7 @@
 
 ***
 
-## [About](#about)
+## About
 
 Peek behind the curtain and get to know your represent]atives. Do their social media rants line up with their focus at the state level or on the hill? Assess their platform and hold them to their word by visualizing and considering the words they use each day while in session.
 
@@ -20,7 +20,7 @@ Check out the most popular words spoken by legislators of a chosen state, gainin
 
 ***
 
-## [Technologies](#tech)
+## Technologies
 
 **Dependencies:** [requirements.txt](https://github.com/aroseartist/Who-Represents-You/README.md "Dependencies")
 
