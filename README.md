@@ -1,17 +1,17 @@
-# Who Represents You
+![header](markdown/background-header.png "header")
 
 ## Table of Contents
 
-* 
-* Technologies
-* How to Use
-* Development
-* Run Locally
-* Author
+* [About](#about)
+* [Technologies](#tech)
+* [How to Use](#how)
+* [Development](#dev)
+* [Run Locally](#run)
+* [Author](#author)
 
-***
+![break](markdown/background-line.jpg "line break")
 
-## About
+## <a name="about"></a>About
 
 Peek behind the curtain and get to know your representatives. Do their social media rants line up with their focus at the state level or on the hill? Assess their platform and hold them to their word by visualizing and considering the words they use each day while in session.
 
@@ -19,7 +19,7 @@ Check out the most popular words spoken by legislators of a chosen state, gainin
 
 ***
 
-## Technologies
+## <a name="tech"></a>Technologies
 
 **Dependencies:** [requirements.txt](https://github.com/aroseartist/Who-Represents-You/README.md "Dependencies")
 
@@ -32,7 +32,7 @@ Check out the most popular words spoken by legislators of a chosen state, gainin
 
 ***
 
-## How to Use
+## <a name="how"></a>How to Use
 ### Popular Words by State Representatives
 
 For each state, you can visualize the Congressional Record in relation to each states legislators. Click on a state and view their most frequently used words. This provides a quick overview of the issues being addressed by that states representatives on the Senate and House floors.
@@ -59,7 +59,7 @@ Who Represents You - Representative Words
 
 ***
 
-## Development
+## <a name="dev"></a>Development
 
 The SVG map is composed of paths created with coordinates via JSON. Map interactivity is programmed with a combination of D3, Javascript, jQuery, and AJAX. Each evening, the Congressional Record is parsed and marked up by the [Sunlight Foundation](http://sunlightfoundation.com/ "Sunlight Foundation"). Their Capitol Words API provides access to the incoming data we see once jsonified, weighed, and put in descending order.
 
@@ -71,7 +71,7 @@ The 'My Words' button prompts the use of jQuery and AJAX to procure a unique ide
 
 ***
 
-## Run Locally
+## <a name="run"></a>Run Locally
 ### Flask App
 
 Create a local directory to work within
@@ -120,7 +120,7 @@ In your borwser, go to localhost:5000 to see the web app
 
 ***
 
-## Author
+## <a name="author"></a>Author
 
 Lora "Ro" Rose is a software engineer from San Francisco, CA with a background in data and analytics program development. After obtaining a Master of Science in Marketing with a concentration in New Media, she has persued software engineering as a route to developing a career in data visualization. Visit her online:
 
