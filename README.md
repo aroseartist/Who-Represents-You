@@ -9,7 +9,7 @@
 * [Run Locally](#run)
 * [Author](#author)
 
-![break](markdown/background-line.jpg "line break")
+![break](markdown/background-line.png "line break")
 
 ## <a name="about"></a>About
 
@@ -17,7 +17,7 @@ Peek behind the curtain and get to know your representatives. Do their social me
 
 Check out the most popular words spoken by legislators of a chosen state, gaining insight into the way in which lawmakers shape and are shaped by their constituents. Users can search for contact information and social details of their federal, state, and local representatives.
 
-***
+![break](markdown/background-line.png "line break")
 
 ## <a name="tech"></a>Technologies
 
@@ -30,7 +30,7 @@ Check out the most popular words spoken by legislators of a chosen state, gainin
 **[AJAX / JSON](https://api.jquery.com/category/ajax/ "AJAX")**           | **[CSS](https://developer.mozilla.org/en-US/docs/Web/CSS "CSS")**           | **[Google Maps API](https://developers.google.com/maps/ "Google Maps")**
 **[D3](https://d3js.org/ "D3")**           | **[Jinja2](http://jinja.pocoo.org/ "Jinja2")**           | **[Twitter API](https://dev.twitter.com/ "Twitter")**
 
-***
+![break](markdown/background-line.png "line break")
 
 ## <a name="how"></a>How to Use
 ### Popular Words by State Representatives
@@ -57,7 +57,7 @@ Who Represents You - Representative Words
 
 ![Representative Words](markdown/WRY_words.png "Representative Words")
 
-***
+![break](markdown/background-line.png "line break")
 
 ## <a name="dev"></a>Development
 
@@ -69,7 +69,7 @@ Once representative details are received, design elements transform them by imag
 
 The 'My Words' button prompts the use of jQuery and AJAX to procure a unique identifier for the given representative. Python is then able to query the Capitol Words API for the most popularly used words by that given representative. Python orders the words by weight and adds them to an array of sets, passing this to the D3 javascript on the front-end. A D3 word cloud is then stylized and rendered with this data.
 
-***
+![break](markdown/background-line.png "line break")
 
 ## <a name="run"></a>Run Locally
 ### Flask App
@@ -118,7 +118,7 @@ In your command line, start up the flask server
 	
 In your borwser, go to localhost:5000 to see the web app
 
-***
+![break](markdown/background-line.png "line break")
 
 ## <a name="author"></a>Author
 
@@ -127,3 +127,5 @@ Lora "Ro" Rose is a software engineer from San Francisco, CA with a background i
 [Personal Website](http://www.aroseartist.com/ "ARoseArtist")
 
 [LinkedIn](linkedin.com/in/aroseartist "Lora Rose")
+
+![break](markdown/background-line.png "line break")
