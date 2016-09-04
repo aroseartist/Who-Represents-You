@@ -116,18 +116,34 @@ path:hover {
 
 /* Footer */
 footer.footer {
+    color: white;
     max-width: 100%;
-    background: url(/static/img/background.jpg);
+    background-image: url(../img/background.jpg);
+}
+a.footer {
+    color: white;
 }
 .panel-footer {
-    padding: 10px 15px;
+    color: white;
+    padding: 15px 15px;
     background-color: #000;
     border-top: 1px solid #ddd;
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px
 }
 .footer-divider {
     margin: 20px 0;
+}
+#footer {
+    color: white;
+    max-width: 100%;
+    background: url(../img/background.jpg);
+}
+
+#featurette-divider {
+    background:url(../img/background-line.png)
+    repeat-x top left;
+    border: 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 /* Responsive sizing */

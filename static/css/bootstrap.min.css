@@ -96,7 +96,6 @@ figure {
 }
 
 hr {
-    height: 0;
     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
     box-sizing: content-box
@@ -373,10 +372,11 @@ img {
 }
 
 hr {
+    background:url(../img/background-line.png)
+    repeat-x top left;
+    border: 0;
     margin-top: 20px;
     margin-bottom: 20px;
-    border: 0;
-    border-top: 1px solid #eee
 }
 
 .sr-only {
@@ -4558,15 +4558,14 @@ button.list-group-item-danger.active:hover {
     color: inherit
 }
 
-
+/*
 #footer {
     max-width: 100%;
     background: url(/static/img/background.jpg);
 }
 
 #footer-wrapper {
-    margin: 0 auto;
-    max-width: 960px;
+
 }
 
 .panel-footer {
@@ -4576,7 +4575,7 @@ button.list-group-item-danger.active:hover {
     border-top: 1px solid #ddd;
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px
-}
+}*/
 
 .panel>.list-group,
 .panel>.panel-collapse>.list-group {

@@ -48,11 +48,12 @@
                 <li><a href="/#"> Home </a></li>
                 <li><a href="/#representatives"> Representatives </a></li>
                 <li><a href="/#about"> About</a></li>
+
             </ul>
         </div>
     </div>
     </nav>
-           
+
 <!-- ################## Map #################### -->
 
 {% block map %}
@@ -156,7 +157,7 @@
 
 <!-- ################## Find Reps #################### -->
 
-
+    <center><img src="/static/img/background-line.png"></center>
     <hr class="featurette-divider" id="representatives">
     <div class="featurette" id="repdetails">
         <p class="lead">
@@ -254,6 +255,7 @@
 
     {% if city %}
     <hr class="featurette-divider">
+    <center><img src="/static/img/background-line.png"></center>
     <p class="lead">
         <div class="container" id="repdetails_container">
             <center>
@@ -370,21 +372,8 @@
                         <center><p></p>
                         <ul class="nav">
                             <li>
-                                <!-- Button that queries Word Cloud -->
+                            <!-- Button that queries Word Cloud -->
                                 <input type="button" value="My Words" class="mywords" id="{{ key['bioguide_id'] }}">
-
-                                <!-- element.scrollIntoView({block: "end", behavior: "smooth"}); -->
-
-
-                <!-- <hr class="featurette-divider" id="toplegwords-divider" hidden>
-                            <div class="featurette" id="toplegwords-featurette" hidden>
-                    <p class="lead">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-8" id="toplegwordscontainer"></div> -->
-
-
-                                <!-- How to scroll to div? -->
                             </li>
                             <li class="active">
                                 <a href="{{ key['website'] }}">
@@ -620,6 +609,7 @@
 
 {% block wordcloud %}
     <!-- On click, show this -->
+    <center><img src="/static/img/background-line.png" hidden></center>
     <hr class="featurette-divider" id="toplegwords-divider" hidden>
     <div class="featurette" id="toplegwords-featurette" hidden>
         <p class="lead">
@@ -714,6 +704,7 @@
 <!-- ################## About #################### -->
 
     <hr class="featurette-divider" id="about">
+    <center><img src="/static/img/background-line.png"></center>
     <div class="featurette">
         <p class="lead">
         <div class="container">
@@ -735,9 +726,12 @@
                         <a href="https://www.instagram.com/aroseartist/" class="btn btn-social-icon btn-instagram"><i class="fa fa-instagram"></i></a>
                         <a href="http://www.linkedin.com/in/aroseartist" class="btn btn-social-icon btn-linkedin"><i class="fa fa-linkedin"></i></a>
                         <a href="http://twitter.com/ARoseArtist" class="btn btn-social-icon btn-twitter"><i class="fa fa-twitter"></i></a>
+                    </br>
                     </div>
                 </div>
-                <div class="col-sm-1"></div>
+                <div class="col-sm-1">
+                    </br>
+                </div>
             </div>
         </div>
         </p>
@@ -746,10 +740,12 @@
 <!-- ################## Footer #################### -->
 
     <footer>
-        <hr class="featurette-divider" id="footer-divider">
+    </br>
+        </br>
         <div class="row" id="footer">
+        </br>
             <div class="col-lg-12">
-                <p><center>Copyright 2016 - <a href="http://www.aroseartist.com/">Lora Rose</a></center></p>
+            </br>
             </div>
         </div>
     </footer>

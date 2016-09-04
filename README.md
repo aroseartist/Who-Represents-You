@@ -4,7 +4,7 @@
 
 * [About](#about)
 * [Technologies](#tech)
-* [How to Use](#how)
+* [User Experience](#user)
 * [Development](#dev)
 * [Run Locally](#run)
 * [Author](#author)
@@ -32,7 +32,7 @@ Check out the most popular words spoken by legislators of a chosen state, gainin
 
 ![break](markdown/background-line.png "line break")
 
-## <a name="how"></a>How to Use
+## <a name="user"></a>User Experience
 ### Popular Words by State Representatives
 
 #### Who Represents You - Popular Words by Utah Representatives:
