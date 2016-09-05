@@ -7,7 +7,7 @@
 
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
-@import url(http://fonts.googleapis.com/css?family=Special+Elite);
+/*@import url(http://fonts.googleapis.com/css?family=Special+Elite);*/
 
 article,
 aside,
@@ -163,121 +163,6 @@ fieldset {
 
 textarea {
     overflow: auto
-}
-/*
-@media print {
-    *,
-    :after,
-    :before {
-        color: #000!important;
-        text-shadow: none!important;
-        background: 0 0!important;
-        -webkit-box-shadow: none!important;
-        box-shadow: none!important
-    }
-    a,
-    a:visited {
-        text-decoration: underline
-    }
-    a[href]:after {
-        content: " (" attr(href) ")"
-    }
-    abbr[title]:after {
-        content: " (" attr(title) ")"
-    }
-    a[href^="javascript:"]:after,
-    a[href^="#"]:after {
-        content: ""
-    }
-    blockquote,
-    pre {
-        border: 1px solid #999;
-        page-break-inside: avoid
-    }
-    thead {
-        display: table-header-group
-    }
-    img,
-    tr {
-        page-break-inside: avoid
-    }
-    img {
-        max-width: 100%
-    }
-    h2,
-    h3,
-    p {
-        font-family: "Special Elite", serif;
-        orphans: 3;
-        widows: 3
-    }
-    h2,
-    h3 {
-        page-break-after: avoid
-    }
-    .navbar {
-        display: none
-    }
-    .btn>.caret,
-    .dropup>.btn>.caret {
-        border-top-color: #000!important
-    }
-    .label {
-        border: 1px solid #000
-    }
-    .table {
-        border-collapse: collapse!important
-    }
-    .table td,
-    .table th {
-        background-color: #fff!important
-    }
-    .table-bordered td,
-    .table-bordered th {
-        border: 1px solid #ddd!important
-    }
-}*/
-
-@font-face {
-    font-family: 'Glyphicons Halflings';
-    src: url(../fonts/glyphicons-halflings-regular.eot);
-    src: url(../fonts/glyphicons-halflings-regular.eot?#iefix) format('embedded-opentype'), url(../fonts/glyphicons-halflings-regular.woff2) format('woff2'), url(../fonts/glyphicons-halflings-regular.woff) format('woff'), url(../fonts/glyphicons-halflings-regular.ttf) format('truetype'), url(../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular) format('svg')
-}
-
-.glyphicon {
-    position: relative;
-    top: 1px;
-    display: inline-block;
-    font-family: 'Glyphicons Halflings';
-    font-style: normal;
-    font-weight: 400;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale
-}
-
-.glyphicon-user:before {
-    content: "\e008"
-}
-
-.glyphicon-envelope:before {
-    content: "\2709"
-}
-
-.glyphicon-expand:before {
-    content: "\e158"
-}
-
-.glyphicon-thumbs-up:before {
-    content: "\e125"
-}
-
-.glyphicon-phone-alt:before {
-    content: "\e183"
-}
-
-.glyphicon-home:before {
-    content: "\e021"
 }
 
 * {
@@ -3553,6 +3438,7 @@ textarea.input-group-sm>.input-group-btn>.btn {
     .navbar-fixed-top .navbar-collapse,
     .navbar-static-top .navbar-collapse {
         background-image: url(../img/background.jpg);
+        background-width: 100%;
         padding-right: 0;
         padding-left: 0
     }
@@ -3560,12 +3446,16 @@ textarea.input-group-sm>.input-group-btn>.btn {
 
 .navbar-fixed-top .navbar-collapse {
     background-image: url(../img/background.jpg);
+    background-repeat:no-repeat;
+    background-width: 100%;
     max-height: 340px
 }
 
 @media (max-device-width:480px) and (orientation:landscape) {
     .navbar-fixed-top .navbar-collapse {
         background-image: url(../img/background.jpg);
+        background-width: 100%;
+        background-repeat:no-repeat;
         max-height: 200px
     }
 }
@@ -3590,6 +3480,8 @@ textarea.input-group-sm>.input-group-btn>.btn {
 
 .navbar-static-top {
     background-image: url(../img/background.jpg);
+    background-width: 100%;
+    background-repeat:no-repeat;
     z-index: 1000;
     border-width: 0 0 1px
 }
@@ -3597,6 +3489,8 @@ textarea.input-group-sm>.input-group-btn>.btn {
 @media (min-width:768px) {
     .navbar-static-top {
         background-image: url(../img/background.jpg);
+        background-width: 100%;
+        background-repeat:no-repeat;
         border-radius: 0
     }
 }
@@ -3604,12 +3498,16 @@ textarea.input-group-sm>.input-group-btn>.btn {
 @media (min-width:768px) {
     .navbar-fixed-top {
         background-image: url(../img/background.jpg);
+        background-width: 100%;
+        background-repeat:no-repeat;
         border-radius: 0
     }
 }
 
 .navbar-fixed-top {
     background-image: url(../img/background.jpg);
+    background-width: 100%;
+    background-repeat:no-repeat;
     top: 0;
     border-width: 0 0 1px
 }

@@ -4,8 +4,11 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 
- /* Import google font */
-@import url(http://fonts.googleapis.com/css?family=Special+Elite);
+
+@font-face {
+    font-family: 'Special Elite';
+    src: url(../fonts/SpecialElite.ttf);
+}
 
 body {
     font-family: "Special Elite", serif;
@@ -24,9 +27,7 @@ div {
     font-family: "Special Elite", serif;
 }
 
-
-
-@import url(http://fonts.googleapis.com/css?family=Kalam:700,400);
+/*@import url(http://fonts.googleapis.com/css?family=Special+Elite);*/
 
 /* Style for Custom Tooltip */
 div.tooltip {   
@@ -62,6 +63,15 @@ div.tooltip {
 }
 
 
+.navbar-fixed-top {
+    background-image: url(../img/background.jpg);
+    background-width: 100%;
+    background-repeat:repeat;
+    top: 0;
+    border-width: 0 0 1px
+}
+
+
 /* Links */
 a {
     background-color: transparent }
@@ -71,6 +81,7 @@ a:hover {
 .link {
       fill: none;
       stroke: #bbb }
+
 
 /* Featurette */
 .featurette-divider {
@@ -82,6 +93,7 @@ a:hover {
 .featurette-heading {
     font-size: 50px;
 }
+
 
 /* D3 map */
 /* On mouse hover, lighten state color */   
@@ -114,6 +126,7 @@ path:hover {
     background: rgba(255,255,255,0.9);
 }
 
+
 /* Footer */
 footer.footer {
     color: white;
@@ -145,6 +158,7 @@ a.footer {
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
 
 /* Responsive sizing */
 @media(max-width:1200px) {
@@ -215,6 +229,12 @@ a.footer {
 }
 
 /* Glyphicons */
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url(../fonts/glyphicons-halflings-regular.eot);
+    src: url(../fonts/glyphicons-halflings-regular.eot?#iefix) format('embedded-opentype'), url(../fonts/glyphicons-halflings-regular.woff2) format('woff2'), url(../fonts/glyphicons-halflings-regular.woff) format('woff'), url(../fonts/glyphicons-halflings-regular.ttf) format('truetype'), url(../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular) format('svg')
+}
+
 .glyphicon {
     position: relative;
     top: 1px;

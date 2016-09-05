@@ -95,16 +95,14 @@
             function showTopWords(resp) {
                 console.log(resp);
                 var listOfTopWords = resp.topwords;
-                $('#topwordscontainer').html("");
-                if (listOfTopWords.length > 0) {
-                    // Iterate over the list and pull out word & count to add to tuples and pass to container
-                    for (var i = 0; i < listOfTopWords.length; i++) {
-                        var topWord = listOfTopWords[i];
-                        var count = topWord[0];
-                        var ngram = topWord[1];
-                        var countNgram = "<br>" + ngram;
-                        $('#topwordscontainer').append(countNgram);
-                    }
+                $('#topwordscontainer').html("");             
+                 // Iterate over the list and pull out word & count to add to tuples and pass to container
+                for (var i = 0; i < listOfTopWords.length; i++) {
+                    var topWord = listOfTopWords[i];
+                    var count = topWord[0];
+                    var ngram = topWord[1];
+                    var countNgram = "<br>" + ngram;
+                    $('#topwordscontainer').append(countNgram);
                 }
             }
             
