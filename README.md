@@ -37,7 +37,7 @@ Check out the most popular words spoken by legislators of a chosen state, gainin
 
 ## <a name="dev"></a>Development
 
-*Excited to have an opportunity to learn based on some of my own interests, this app is front-end heavy with use of amazing API data integrated into visuals including an interactive D3 map and word clouds.*
+*Excited to have an opportunity to learn based on some of my own interests, this app is front-end heavy with use of amazing API data integrated into visuals including an interactive D3 map and word cloud.*
 
 The SVG map is composed of paths created with coordinates via JSON. Map interactivity is programmed with a combination of D3, Javascript, jQuery, and AJAX. Each evening, the Congressional Record is parsed and marked up by the [Sunlight Foundation](http://sunlightfoundation.com/ "Sunlight Foundation"). Their Capitol Words API provides access to the incoming data we see once jsonified, weighed, and put in descending order.
 
@@ -93,17 +93,17 @@ Code review and demo practice
 ## <a name="user"></a>User Experience
 ### Popular Words by State Representatives
 
-#### Who Represents You - Popular Words by Utah Representatives:
+#### Most Frequently Used Words In Congress, Per State:
 For each state, you can visualize the Congressional Record in relation to the state legislators. Click on a state and view their most frequently used words. This provides a quick overview of the issues being addressed by that states Representatives on the Senate and House floors.
 
 ![Capitol Words Map](markdown/WRY_map.png "Map")
 
-#### Who Represents You - Representative Details:
+#### Representative Details:
 Enter a city and select a state: view image, party affiliation, and details about each local, state, and federal Representative. Visit their website, call their office with a single click, check out to their social media accounts, and interact with their Twitter feed directly from this app.
 
 ![Representative Details](markdown/WRY_reps.png "Representative Details")
 
-#### Who Represents You - Representative Words:
+#### Most Frequently Used Words In Congress, Per Representative:
 Click on the button, 'My Words' and find out what each of these state Representatives are talking about in Congress and Senate. This gives a visual birds eye view of their commentary and verbal representation. Peruse their Twitter feed to gather a sense of drive and actions that are in relation to these.
 
 ![Representative Words](markdown/WRY_words.png "Representative Words")
