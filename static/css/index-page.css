@@ -27,22 +27,6 @@ div {
     font-family: "Special Elite", serif;
 }
 
-/*@import url(http://fonts.googleapis.com/css?family=Special+Elite);*/
-
-/* Style for Custom Tooltip */
-div.tooltip {   
-    position: absolute;           
-    text-align: center;           
-    width: 60px;                  
-    height: 28px;                 
-    padding: 2px;             
-    font: 12px "Special Elite", serif;        
-    background: white;   
-    border: 0px;      
-    border-radius: 8px;           
-    pointer-events: none;         
-}
-
 #topwordscontainer{
     font-size: 35px;
     font-variant: small-caps;
@@ -62,26 +46,26 @@ div.tooltip {
   color: #fff;
 }
 
-
+/* Navigation Bar */
 .navbar-fixed-top {
     background-image: url(../img/background.jpg);
-    background-width: 100%;
-    background-repeat:repeat;
+    background-size:cover;
     top: 0;
     border-width: 0 0 1px
 }
 
-
 /* Links */
 a {
     background-color: transparent }
+
 a:active,
 a:hover {
-    outline: 0 }
+    outline: 0 
+}
 .link {
       fill: none;
-      stroke: #bbb }
-
+      stroke: #bbb 
+}
 
 /* Featurette */
 .featurette-divider {
@@ -93,7 +77,6 @@ a:hover {
 .featurette-heading {
     font-size: 50px;
 }
-
 
 /* D3 map */
 /* On mouse hover, lighten state color */   
@@ -126,7 +109,6 @@ path:hover {
     background: rgba(255,255,255,0.9);
 }
 
-
 /* Footer */
 footer.footer {
     color: white;
@@ -158,7 +140,6 @@ a.footer {
     margin-top: 20px;
     margin-bottom: 20px;
 }
-
 
 /* Responsive sizing */
 @media(max-width:1200px) {

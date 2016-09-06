@@ -1,7 +1,7 @@
 """Server file for Hb project."""
 # Import necessary modules, etc.
 
-import Flask
+from flask import Flask
 # Access google maps API: exchange city,state for lat,lng
 import geocoder
 import geojson

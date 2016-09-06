@@ -13,14 +13,14 @@
 
     <title>Who Represents You</title>
     
+    <!-- Access to D3 paths -->
+    <script src="https://d3js.org/d3.v3.js"></script>
     <!-- Bootstrap Core CSS -->
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/static/css/index-page.css">
     <!-- Font Awesome SM icons -->
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <!-- Access to D3 paths -->
-    <script src="https://d3js.org/d3.v3.js"></script>
     <!-- jQuery -->
     <script type="text/javascript" src="https://ajax.microsoft.com/ajax/jQuery/jquery-1.4.2.min.js"></script>
 {% endblock head %}
@@ -77,9 +77,15 @@
                 .projection(projection);
             //Creates SVG element and append map to the SVG
             var svg = d3.select("#d3-map")
-                .append("svg:svg")
+                .append("svg")
                 .attr("width", w)
                 .attr("height", h);
+
+            // Append Div for tooltip to SVG
+            var div = d3.select("#d3-map")
+                .append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0.5);
             
             // Accept state param from state path click
             function getstate(state) { 
@@ -88,7 +94,6 @@
                 };
                 // Pass to server route for access to API and return with response to showTopWords function
                 $.get('/getstatewords.json', params, showTopWords);
-                // debugger;
             }
             
             // Accept response from API via server
@@ -117,23 +122,8 @@
                     .style("fill", "#625076")
                     // Click on state kicks off State Words API call
                     .on("click", function(d) {
-                        console.log('map clicked');
                         getstate(d.state);
                     })
-                    .on("mouseover", function(d) {      
-                        div.transition()        
-                        .duration(200)      
-                        .style("opacity", .9);      
-                        div.text(d.name)
-                        .style("left", (d3.event.pageX) + "px")     
-                        .style("top", (d3.event.pageY - 28) + "px");    
-                    })   
-                    // fade out tooltip on mouse out               
-                    .on("mouseout", function(d) {       
-                        div.transition()        
-                        .duration(500)      
-                        .style("opacity", 0);   
-                    });
             });
             </script>
         </div>
@@ -173,16 +163,17 @@
                             <label for="city" class="col-sm-2 control-label">City:</label>
                             <br>
                             <!-- Text input for city -->
-                            <input type="text" class="form-control" name="city" id="city" required>
+                            <!-- <input type="text" class="form-control" name="city" id="city" required> -->
+                            <input type="text" value="Atlanta" class="form-control" name="city" id="city" required>
                         </div>
                         <p></p>
                         <div class="form-group" id="state">
                             <label for="state" class="col-sm-2 control-label">State:</label>
                             <br>
-                            <select name="state" id="state" class="form-control" required>
+                            <select name="state" value="Georgia" id="state" class="form-control" required>
                                 <!-- Drop down menu for choosing state
                                 and display a certain length -->
-                                <option value="AL">Alabama</option>
+                                <!-- <option value="AL">Alabama</option>
                                 <option value="AK">Alaska</option>
                                 <option value="AZ">Arizona</option>
                                 <option value="AR">Arkansas</option>
@@ -191,9 +182,9 @@
                                 <option value="CT">Connecticut</option>
                                 <option value="DE">Delaware</option>
                                 <option value="DC">District Of Columbia</option>
-                                <option value="FL">Florida</option>
+                                <option value="FL">Florida</option> -->
                                 <option value="GA">Georgia</option>
-                                <option value="HI">Hawaii</option>
+                                <!-- <option value="HI">Hawaii</option>
                                 <option value="ID">Idaho</option>
                                 <option value="IL">Illinois</option>
                                 <option value="IN">Indiana</option>
@@ -232,7 +223,7 @@
                                 <option value="WA">Washington</option>
                                 <option value="WV">West Virginia</option>
                                 <option value="WI">Wisconsin</option>
-                                <option value="WY">Wyoming</option>
+                                <option value="WY">Wyoming</option> -->
                             </select>
                         </div>
                         <p></p>
@@ -610,17 +601,8 @@
 
 {% block wordcloud %}
     <!-- On click, show this -->
-    <center><img src="/static/img/background-line.png" hidden></center>
-    <hr class="featurette-divider" id="toplegwords-divider" hidden>
-    <div class="featurette" id="toplegwords-featurette" hidden>
-        <p class="lead">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-8" id="toplegwordscontainer"></div>
-            </div>
-        </div>
-        </p>
-    </div>
+    <center><img src="/static/img/background-line.png" id="toplegwords-divider" hidden></center>
+    <div class="col-sm-12" id="toplegwordscontainer"></div>
 
 <!-- ################ D3 Word Cloud ################## -->
 
@@ -647,7 +629,6 @@
                 var listOfLegWords = resp.legwords;
                 makeWordCloud(listOfLegWords);
                     $('#toplegwords-divider').show();
-                    $('#toplegwords-featurette').show();
                     var words = $('#toplegwordscontainer')[0];
                     words.scrollIntoView();
             }
@@ -659,23 +640,21 @@
                     var currentWord = words[i];
                     allSizes.push(currentWord[0]);
                 };
-            console.log(allSizes);
             var max = Math.max.apply(null, allSizes);
             var min = Math.min.apply(null, allSizes);
             var roScale = d3.scale.linear()
                             .domain([min, max])
-                            .range([15, 100]);
-        
+                            .range([30, 200]);
+      
             d3.layout.cloud().size([width, height])
                 .words(words.map(function(d) {
                 return {text: d[1], size:  Number(d[0])};
                 }))
-                .rotate(function() { return ~~(Math.random() * 2) * 90; })
+                .rotate(function() { return ~~(Math.random() * 2) * 30; })
                 .font("Special Elite")
                 .fontSize(function(d) { return roScale(d.size); })
                 .on("end", draw)
-                // .spiral("archimedean") find out about this!!!!
-                .padding(1)
+                .padding(3)
                 .start();
 
             function draw(words) {
@@ -683,7 +662,7 @@
                 .attr("width", width)
                 .attr("height", height)
                 .append("g")
-                .attr("transform", "translate(" + [width >> 1, height >> 1] + ")")
+                .attr("transform", "translate(" + [width/2, height/2] + ")")
                 .selectAll("text")
                 .data(words)
                 .enter().append("text")
@@ -756,7 +735,6 @@
 <script src="/static/js/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="/static/js/bootstrap.min.js"></script>
-
 <script type="text/javascript">
     
 window.onload = function() {
