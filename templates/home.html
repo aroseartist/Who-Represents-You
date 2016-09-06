@@ -67,7 +67,7 @@
             <script type="text/javascript">
             // Width and height of map
             var w = 1000;
-            var h = 700;
+            var h = 600;
             // D3 Projection
             var projection = d3.geo.albersUsa()
                 // Translate to center of screen
@@ -103,6 +103,7 @@
             function showTopWords(resp) {
                 console.log(resp);
                 var listOfTopWords = resp.topwords;
+                // remove past words before adding new
                 $('#topwordscontainer').html("");             
                  // Iterate over the list and pull out word & count to add to tuples and pass to container
                 for (var i = 0; i < listOfTopWords.length; i++) {
@@ -403,10 +404,104 @@
                 </div>
                 {% endfor %}
             </div>
+        </div>
         <hr class="featurette-divider" id="statewords">
+
+<!-- ############## Word Cloud Container ################ -->
+
+{% block wordcloud %}
+
+    <!-- On click, show this -->
+    <center><img src="/static/img/background-line.png" id="toplegwords-divider" hidden>
+    <div class="col-sm-12" id="toplegwordscontainer"></div>
+    <img src="/static/img/background-line.png" id="toplegwords-divider1" hidden></center>
+
+
+<!-- ################ D3 Word Cloud ################## -->
+
+    <script src="/static/js/d3.js"></script>
+    <script src="/static/js/d3.layout.cloud.js"></script>
+    
+    <script>
+        var svg_location = "#toplegwordscontainer";
+        // w/h of svg item
+        var width = $(document).width()/1.1;
+        var height = $(document).height()/4;
+        // text fill colors
+        var fill = d3.scale.category20b();
+        $(document).ready(function(){
+            $(".mywords").click(function getleg() {
+                var id = this.id;
+                var params = {
+                    'bioguide_id': id
+                };
+            $.get('/getlegwords.json', params, showLegWords);
+            });
+
+            function showLegWords(resp) {
+                var listOfLegWords = resp.legwords;
+                $('#toplegwordscontainer').html("");
+                makeWordCloud(listOfLegWords);
+                    $('#toplegwords-divider').show();
+                    $('#toplegwords-divider1').show();
+                    var words = $('#toplegwordscontainer')[0];
+                    words.scrollIntoView();
+            }
+        })
+
+        function makeWordCloud(words){
+            var allSizes = [];
+                for (var i = 0; i < words.length; i++) {
+                    var currentWord = words[i];
+                    allSizes.push(currentWord[0]);
+                };
+            var max = Math.max.apply(null, allSizes);
+            var min = Math.min.apply(null, allSizes);
+            var roScale = d3.scale.linear()
+                            .domain([min, max])
+                            .range([15, 100]);
+      
+            d3.layout.cloud().size([width, height])
+                .words(words.map(function(d) {
+                return {text: d[1], size:  Number(d[0])};
+                }))
+                .rotate(function() { return ~~(Math.random() * 2) * 30; })
+                .font("Special Elite")
+                .fontSize(function(d) { return roScale(d.size); })
+                .on("end", draw)
+                // padding between words
+                .padding(3)
+                .start();
+
+            function draw(words) {
+            d3.select(svg_location).append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                // "g" group elements
+                .append("g")
+                .style("display", "block")
+                .attr("transform", "translate(" + [width/2, height/2] + ")")
+                .selectAll("text")
+                .data(words)
+                .enter().append("text")
+                .style("font-size", function(d) { return d.size + "px"; })
+                .style("font-family", "Special Elite")
+                .style("fill", function(d, i) { return fill(i); })
+                .attr("text-anchor", "middle")
+                .attr("transform", function(d) {
+                  return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                })
+                .text(function(d) { return d.text; });
+            }
+        d3.layout.cloud().stop();
+        }
+    </script>
+
+{% endblock wordcloud %}
 
 <!-- ################ Pres / Vice / FLOTUS ################ -->
 
+            <div class="container">
             <div class="row">
                 <center><h3 class="featurette-heading">Federal</h3></center><p></p></br>
                 <div class="col-sm-4">
@@ -600,94 +695,10 @@
         </div>
     {% endif %}
 
-<!-- ############## Word Cloud Container ################ -->
-
-{% block wordcloud %}
-    <!-- On click, show this -->
-    <center><img src="/static/img/background-line.png" id="toplegwords-divider" hidden></center>
-    <div class="col-sm-12" id="toplegwordscontainer"></div>
-
-<!-- ################ D3 Word Cloud ################## -->
-
-    <script src="/static/js/d3.js"></script>
-    <script src="/static/js/d3.layout.cloud.js"></script>
-    
-    <script>
-        var svg_location = "#toplegwordscontainer";
-        var width = $(document).width();
-        var height = $(document).height();
-
-        var fill = d3.scale.category20b();
-
-        $(document).ready(function(){
-            $(".mywords").click(function getleg() {
-                var id = this.id;
-                var params = {
-                    'bioguide_id': id
-                };
-            $.get('/getlegwords.json', params, showLegWords);
-            });
-
-            function showLegWords(resp) {
-                var listOfLegWords = resp.legwords;
-                makeWordCloud(listOfLegWords);
-                    $('#toplegwords-divider').show();
-                    var words = $('#toplegwordscontainer')[0];
-                    words.scrollIntoView();
-            }
-        })
-
-        function makeWordCloud(words){
-            var allSizes = [];
-                for (var i = 0; i < words.length; i++) {
-                    var currentWord = words[i];
-                    allSizes.push(currentWord[0]);
-                };
-            var max = Math.max.apply(null, allSizes);
-            var min = Math.min.apply(null, allSizes);
-            var roScale = d3.scale.linear()
-                            .domain([min, max])
-                            .range([30, 200]);
-      
-            d3.layout.cloud().size([width, height])
-                .words(words.map(function(d) {
-                return {text: d[1], size:  Number(d[0])};
-                }))
-                .rotate(function() { return ~~(Math.random() * 2) * 30; })
-                .font("Special Elite")
-                .fontSize(function(d) { return roScale(d.size); })
-                .on("end", draw)
-                .padding(3)
-                .start();
-
-            function draw(words) {
-            d3.select(svg_location).append("svg")
-                .attr("width", width)
-                .attr("height", height)
-                .append("g")
-                .attr("transform", "translate(" + [width/2, height/2] + ")")
-                .selectAll("text")
-                .data(words)
-                .enter().append("text")
-                .style("font-size", function(d) { return d.size + "px"; })
-                .style("font-family", "Special Elite")
-                .style("fill", function(d, i) { return fill(i); })
-                .attr("text-anchor", "middle")
-                .attr("transform", function(d) {
-                  return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-                })
-                .text(function(d) { return d.text; });
-            }
-        d3.layout.cloud().stop();
-        }
-    </script>
-
-{% endblock wordcloud %}
-
 <!-- ################## About #################### -->
 
-    <hr class="featurette-divider" id="about">
-    <center><img src="/static/img/background-line.png"></center>
+    <!-- <hr class="featurette-divider" id="about"> -->
+    <center><img src="/static/img/background-line.png" id="about"></center>
     <div class="featurette">
         <p class="lead">
         <div class="container">
