@@ -20,7 +20,7 @@ body {
 html {
     font-family: "Special Elite", serif;
     -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%
+    -ms-text-size-adjust: 100%;
 }
 
 div {
@@ -51,20 +51,21 @@ div {
     background-image: url(../img/background.jpg);
     background-size:cover;
     top: 0;
-    border-width: 0 0 1px
+    border-width: 0 0 1px;
 }
 
 /* Links */
 a {
-    background-color: transparent }
+    background-color: transparent;
+}
 
 a:active,
 a:hover {
-    outline: 0 
+    outline: 0;
 }
 .link {
       fill: none;
-      stroke: #bbb 
+      stroke: #bbb;
 }
 
 /* Featurette */
@@ -110,31 +111,17 @@ path:hover {
 }
 
 /* Footer */
-footer.footer {
-    color: white;
-    max-width: 100%;
-    background-image: url(../img/background.jpg);
-}
-a.footer {
-    color: white;
-}
-.panel-footer {
-    color: white;
-    padding: 15px 15px;
-    background-color: #000;
-    border-top: 1px solid #ddd;
-}
-.footer-divider {
-    margin: 20px 0;
-}
+
 #footer {
     color: white;
     max-width: 100%;
-    background: url(../img/background.jpg);
+    background-size:cover;
+    background-image: url(../img/background.jpg);
+    background-repeat:no-repeat;
 }
 
 #featurette-divider {
-    background:url(../img/background-line.png)
+    background:url(../img/background-line.png);
     repeat-x top left;
     border: 0;
     margin-top: 20px;

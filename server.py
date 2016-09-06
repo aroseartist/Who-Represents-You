@@ -1,7 +1,6 @@
 """Server file for Hb project."""
 # Import necessary modules, etc.
 
-from flask import Flask
 # Access google maps API: exchange city,state for lat,lng
 import geocoder
 import geojson
@@ -17,7 +16,7 @@ import sunlight
 import sunlight.service
 
 # Utilize Flask libraries
-from flask import (render_template, redirect, request, flash, jsonify)
+from flask import (Flask, render_template, redirect, request, flash, jsonify)
 # Use toolbar for debugging
 # from flask_debugtoolbar import DebugToolbarExtension
 from Jinja2 import StrictUndefined
@@ -34,7 +33,6 @@ app.secret_key = 'FLASK_SECRET_KEY'
 sunlight.config.KEY_ENVVAR = 'SUNLIGHT_API_KEY'
 # Access key for Googlemaps API
 gmaps = googlemaps.Client(key=os.environ['GEOLOCATE_GOOGLE_API'])
-
 
 # Ensures undefined variables in jinja raise an error
 app.jinja_env.undefined = StrictUndefined
@@ -92,7 +90,7 @@ def gather_sunlight_congress():
                             city=city)
 
 
-##################### jQuery / AJAX Calls #############################
+################### jQuery / AJAX Calls #####################
 
 @app.route('/getstatewords.json')
 def get_state_words():
@@ -151,7 +149,7 @@ def get_leg_words():
     return jsonify({'legwords':legs_words})
 
 
-################### Helper Functions ##########################
+################### Helper Functions #######################
 
 # Listening or requests
 if __name__ == "__main__":

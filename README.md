@@ -47,6 +47,47 @@ Once Representative details are received, design elements transform them by imag
 
 The 'My Words' button prompts the use of jQuery and AJAX to procure a unique identifier for the given Representative. Python is then able to query the Capitol Words API for the most popularly used words by that given Representative. Python orders the words by weight and adds them to an array of sets, passing this to the D3 javascript on the front-end. A D3 word cloud is then stylized and rendered with this data.
 
+### Progression Timeline
+
+* Setup vagrant, environment, file tree
+* Develop raw layout specs and Flask routes
+* Sunlight API doc review and Python test queries
+* SQL database modeling and population
+* Establish Google Maps API and geolocating input fields
+* Construct Congress API and OpenStates API queries
+
+Code review and commenting assessment
+
+* Add minimal Bootstrap layout and base structure
+* Ensure JSON parsing into Jinja2
+* Decide on contact details and test Twitter API
+* Stylize and organize incoming data
+* Create Federal profile structures
+
+Code review and commenting assessment
+
+* D3 research: US map and Wordcloud
+* Add SVG JSON paths for US map
+* Containerize and produce map
+* Query data from Capitol Words API
+* Use Python to formulate jsonified data
+* Bind JSON data to map paths with highlight feature
+
+Code review and commenting assessment
+
+* Actualize jQuery and AJAX for Capitol Words displays
+* Organize jsonified API data with Python
+* Calibrate D3 word cloud and bind to data
+* Finalize stylization and front-end visual elements
+* Review CSS and profile layouts
+
+Code review and demo practice
+
+* Produce unit tests to minimum threshold of 85%
+* Create about section for app
+* Develop README
+* Access wish list for additional features (given time)
+
 ![break](markdown/background-line.png "line break")
 
 ## <a name="user"></a>User Experience
