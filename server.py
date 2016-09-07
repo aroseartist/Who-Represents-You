@@ -1,6 +1,6 @@
 """Server file for Hb project."""
-# Import necessary modules, etc.
 
+# Import necessary modules, etc.
 # Access google maps API: exchange city,state for lat,lng
 import geocoder
 import geojson
