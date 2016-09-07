@@ -5,6 +5,7 @@ import server
 from server import app
 
 
+
 class FlaskRouteTests(TestCase):
     """Flask tests."""
 
