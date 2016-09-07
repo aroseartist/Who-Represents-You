@@ -167,4 +167,5 @@ Lora "Ro" Rose is a software engineer from San Francisco, CA with a background i
 
 [LinkedIn](linkedin.com/in/aroseartist "Lora Rose")
 
+
 ![break](markdown/background-line.png "line break")
