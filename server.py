@@ -6,7 +6,7 @@ import geocoder
 import geojson
 import googlemaps
 # Utilize Jinja for HTML templates
-import Jinja2
+# import Jinja2
 import json
 # Access local env variables
 import os
