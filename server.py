@@ -6,7 +6,7 @@ import geocoder
 import geojson
 import googlemaps
 # Utilize Jinja for HTML templates
-# import Jinja2
+import jinja2
 import json
 # Access local env variables
 import os
@@ -19,7 +19,7 @@ import sunlight.service
 from flask import (Flask, render_template, redirect, request, flash, jsonify)
 # Use toolbar for debugging
 # from flask_debugtoolbar import DebugToolbarExtension
-from Jinja2 import StrictUndefined
+from jinja2 import StrictUndefined
 # Access JSON
 from pprint import pprint
 from sunlight import (congress, capitolwords)
