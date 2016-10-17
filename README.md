@@ -1,9 +1,8 @@
 ![header](markdown/background-header.png "header")
 
-### Explore & Play With This App Online:
-### [Who Represents You](http://represents-you.herokuapp.com "Who Represents You")
+### Explore & Play With This App Online - [Who Represents You](http://represents-you.herokuapp.com "Who Represents You")
 
-.
+
 ![break](markdown/background-line.png "line break")
 
 ## Table of Contents
@@ -24,6 +23,10 @@ Peek behind the curtain and get to know your Representatives. Do their social me
 
 Check out the most popular words spoken by legislators of a chosen state, gaining insight into the way in which lawmakers shape and are shaped by their constituents. Users can search for contact information and social details of their federal, state, and local Representatives.
 
+#### Watch a video of the app in use -
+
+[![Alt text](http://i3.ytimg.com/vi/hIulAq1Ku3I/hqdefault.jpg)](https://www.youtube.com/watch?v=hIulAq1Ku3I)
+
 ![break](markdown/background-line.png "line break")
 
 ## <a name="tech"></a>Technologies
@@ -35,9 +38,9 @@ Check out the most popular words spoken by legislators of a chosen state, gainin
 **[AJAX / JSON](https://api.jquery.com/category/ajax/ "AJAX")**           | **[CSS](https://developer.mozilla.org/en-US/docs/Web/CSS "CSS")**           | **[Google Maps API](https://developers.google.com/maps/ "Google Maps")**
 **[D3](https://d3js.org/ "D3")**           | **[Jinja2](http://jinja.pocoo.org/ "Jinja2")**           | **[Twitter API](https://dev.twitter.com/ "Twitter")**
 
-**Dependencies:** [requirements.txt](README.md "Dependencies")
+####**Dependencies -** [requirements.txt](README.md "Dependencies")
 
-**Test Coverage:** [90% unittest coverage](tests.py)
+####**Test Coverage -** [90% unittest coverage](tests.py)
 
 ![break](markdown/background-line.png "line break")
 
@@ -99,20 +102,32 @@ Code review and demo practice
 ## <a name="user"></a>User Experience
 ### Popular Words by State Representatives
 
-#### Most Frequently Used Words In Congress, Per State:
-For each state, you can visualize the Congressional Record in relation to the state legislators. Click on a state and view their most frequently used words. This provides a quick overview of the issues being addressed by that states Representatives on the Senate and House floors.
+#### Most Frequently Used Words In Congress, Per State -
+For each state, you can visualize the Congressional Record in relation to the state legislators. Click on a state and view their most frequently used words.
 
-![Capitol Words Map](markdown/WRY_map.png "Map")
+![Capitol Words Map](markdown/map.gif "Map")
 
-#### Representative Details:
-Enter a city and select a state: view image, party affiliation, and details about each local, state, and federal Representative. Visit their website, call their office with a single click, check out to their social media accounts, and interact with their Twitter feed directly from this app.
+This provides a quick overview of the issues being addressed by that states Representatives on the Senate and House floors.
 
-![Representative Details](markdown/WRY_reps.png "Representative Details")
+![Representative Search](markdown/search.gif "Search")
 
-#### Most Frequently Used Words In Congress, Per Representative:
+![break](markdown/background-line.png "line break")
+
+#### Representative Details -
+Enter a city and select a state: view image, party affiliation, and details about each local, state, and federal Representative.
+
+![Contact Representatives](markdown/call.gif "Contact Representatives")
+
+Visit their website, call their office with a single click, check out to their social media accounts, and interact with their Twitter feed directly from this app.
+
+![Tweet Representatives](markdown/twitter.gif "Tweet Representatives")
+
+![break](markdown/background-line.png "line break")
+
+#### Most Frequently Used Words In Congress, Per Representative -
 Click on the button, 'My Words' and find out what each of these state Representatives are talking about in Congress and Senate. This gives a visual birds eye view of their commentary and verbal representation. Peruse their Twitter feed to gather a sense of drive and actions that are in relation to these.
 
-![Representative Words](markdown/WRY_words.png "Representative Words")
+![Representative Words](markdown/cloud.gif "Representative Words")
 
 ![break](markdown/background-line.png "line break")
 
@@ -167,11 +182,10 @@ In your borwser, go to localhost:5000 to see the web app
 
 ## <a name="author"></a>Author
 
-Lora "Ro" Rose is a software engineer from San Francisco, CA with a background in data and analytics program development. After obtaining a Master of Science in Marketing with a concentration in New Media, she has persued software engineering as a route towards a career in data visualization. Visit her online:
+Lora "Ro" Rose is a software engineer from San Francisco, CA with a background in data and analytics program development. After obtaining a Master of Science in Marketing with a concentration in New Media, she has persued software engineering as a route towards a career in data visualization. Visit her online -
 
 [Personal Website](http://www.aroseartist.com/ "ARoseArtist")
 
 [LinkedIn](linkedin.com/in/aroseartist "Lora Rose")
-
 
 ![break](markdown/background-line.png "line break")
